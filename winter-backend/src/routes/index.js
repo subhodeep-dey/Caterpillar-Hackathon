@@ -1,9 +1,8 @@
-import session from './session';
-import user from './user';
-import message from './message';
+const express = require('express');
+const router = express.Router();
 
-export default {
-  session,
-  user,
-  message,
-};
+router.get('/', (req, res) => {
+  res.send('Welcome to the index route!');
+});
+
+module.exports = router;
