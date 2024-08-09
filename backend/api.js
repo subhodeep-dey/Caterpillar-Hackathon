@@ -1,8 +1,14 @@
 import OpenAI from "openai";
 import readline from "readline";
 import fs from 'fs';
+import dotenv from 'dotenv';
 
-const openai = new OpenAI();
+
+dotenv.config();
+const openai = new OpenAI({
+    // create dotenv and add key
+    apiKey: process.env.API_KEY
+});
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
