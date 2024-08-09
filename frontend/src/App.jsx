@@ -1,11 +1,37 @@
-import React, { useState } from 'react';
-import './App.css'; // Add your custom CSS here
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';  // Import useNavigate
+import './App.css'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationArrow, faMicrophone } from '@fortawesome/free-solid-svg-icons';
 
 function ChatBot() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [questionnaire, setQuestionnaire] = useState([
+    { question: "Enter the truck serial number (e.g., 7301234, 730EJ73245, 73592849, 735EJBC9723):", field: "Truck Serial Number", answer: "" },
+    { question: "Enter the truck model (e.g., 730, 730 EJ, 735, 745):", field: "Truck Model", answer: "" },
+    { question: "Enter the inspector name:", field: "Inspector Name", answer: "" },
+    { question: "Enter the inspection employee ID:", field: "Inspection Employee ID", answer: "" },
+    { question: "Enter the date and time of inspection:", field: "Date & Time of Inspection", answer: "" },
+    // Add the remaining questions here...
+  ]);
+  const navigate = useNavigate();  // Initialize useNavigate hook
+
+  useEffect(() => {
+    const date = new Date();
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    const strTime = `${hour}:${minute < 10 ? '0' : ''}${minute}`;
+
+    const firstQuestion = {
+      text: questionnaire[0].question,
+      time: strTime,
+      sender: 'bot',
+    };
+
+    setMessages([firstQuestion]);
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -23,30 +49,29 @@ function ChatBot() {
       sender: 'user',
     };
 
-    setMessages([...messages, userMessage]);
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
+
+    // Store the user's answer to the current question
+    const updatedQuestionnaire = [...questionnaire];
+    updatedQuestionnaire[currentQuestionIndex].answer = input;
+    setQuestionnaire(updatedQuestionnaire);
 
     setInput('');
 
-    // Sending the user's message to the server
-    try {
-      const response = await fetch('/get', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ msg: input }),
-      });
+    // Check if there are more questions to ask
+    if (currentQuestionIndex < questionnaire.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
 
-      const data = await response.text();
-
-      // Bot's response
+      // Bot's response (next question)
       const botMessage = {
-        text: data,
+        text: updatedQuestionnaire[currentQuestionIndex + 1].question,
         time: strTime,
         sender: 'bot',
       };
-
       setMessages((prevMessages) => [...prevMessages, botMessage]);
-    } catch (error) {
-      console.error('Error:', error);
+    } else {
+      // End of questionnaire, navigate to summary page
+      navigate('/summary', { state: { questionnaire: updatedQuestionnaire } });
     }
   };
 
@@ -74,10 +99,9 @@ function ChatBot() {
       <div className="w-full max-w-xl">
         <div className="bg-white shadow-lg rounded-lg">
           <div className="bg-gray-800 text-white p-4 rounded-t-lg flex items-center">
-            {/* <img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" alt="ChatBot" className="w-10 h-10 rounded-full mr-3" /> */}
             <div>
               <h2 className="text-lg font-semibold">ChatBot</h2>
-              <p className="text-sm">Ask me anything!</p>
+              <p className="text-sm">Answer the questions!</p>
             </div>
           </div>
           <div id="messageFormeight" className="p-4 overflow-y-auto h-96 space-y-4">
@@ -86,13 +110,6 @@ function ChatBot() {
                 key={index}
                 className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
               >
-                {/* {message.sender === 'bot' && (
-                  // <img
-                  //   src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png"
-                  //   alt="Bot"
-                  //   className="w-8 h-8 rounded-full mr-3"
-                  // />
-                )} */}
                 <div
                   className={`max-w-xs p-3 rounded-lg ${
                     message.sender === 'user'
@@ -101,17 +118,7 @@ function ChatBot() {
                   }`}
                 >
                   <p>{message.text}</p>
-                  {/* <span className="block text-xs mt-2 text-right">
-                    {message.time}
-                  </span> */}
                 </div>
-                {/* {message.sender === 'user' && (
-                  // <img
-                  //   src="https://i.ibb.co/d5b84Xw/Untitled-design.png"
-                  //   alt="User"
-                  //   className="w-8 h-8 rounded-full ml-3"
-                  // />
-                )} */}
               </div>
             ))}
           </div>
@@ -121,7 +128,7 @@ function ChatBot() {
                 type="text"
                 id="text"
                 name="msg"
-                placeholder="Type your message..."
+                placeholder="Type your answer..."
                 autoComplete="off"
                 className="w-full p-3 rounded-l-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={input}
