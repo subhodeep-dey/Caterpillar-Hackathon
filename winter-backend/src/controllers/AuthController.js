@@ -1,3 +1,5 @@
+// https://github.com/sunilksamanta/node-mongoose-setup/blob/master/src/controllers/AuthController.js
+
 const { AuthService } = require( './../services/AuthService' );
 const { Auth } = require( './../models/Auth' );
 const { User } = require( './../models/User' );
