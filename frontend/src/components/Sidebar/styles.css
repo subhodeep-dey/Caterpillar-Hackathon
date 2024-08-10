@@ -23,7 +23,7 @@
   justify-content: space-between;
 }
 .sidebar-items {
-  max-height: 80vh;
+  max-height: 63vh;
   overflow-y: auto;
 }
 .sidebar-item {
