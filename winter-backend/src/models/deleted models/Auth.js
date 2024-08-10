@@ -1,7 +1,7 @@
 const mongoose = require( 'mongoose' );
 const { Schema } = require( 'mongoose' );
 const jwt = require( 'jsonwebtoken' ),
-    config = require( '../../config/config' ).getConfig(),
+    config = require( '../../../config/config' ).getConfig(),
     jwtKey = config.JWT_SECRET,
     jwtExpirySeconds = 172800;
 

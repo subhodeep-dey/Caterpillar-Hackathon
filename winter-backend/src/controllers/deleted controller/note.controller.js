@@ -1,4 +1,4 @@
-const Note = require('../models/note.model.js');
+const Note = require('../../models/deleted models/note.model.js');
 
 
 // Create and Save a new Note
