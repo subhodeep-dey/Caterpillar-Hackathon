@@ -14,7 +14,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center; /* Center content horizontally */
-  justify-content: center; /* Center content vertically */
+  justify-content: flex-start; /* Start content at the top */
+  padding: 20px; /* Add padding around the body */
+  box-sizing: border-box; /* Include padding in height and width calculations */
 }
 
 .container {
@@ -22,11 +24,10 @@ body {
   flex-direction: column;
   align-items: center; /* Center the contents horizontally */
   gap: 20px; /* Space between items */
-  padding: 20px; /* Add padding */
   width: 100%; /* Full width of the viewport */
   max-width: 100vw; /* Ensure container doesn't exceed viewport width */
-  height: 100%; /* Full height of the viewport */
-  box-sizing: border-box; /* Include padding in width calculations */
+  min-height: 100vh; /* Ensure container is at least the viewport height */
+  box-sizing: border-box; /* Include padding in height and width calculations */
   overflow-y: auto; /* Enable vertical scrolling if needed */
 }
 
