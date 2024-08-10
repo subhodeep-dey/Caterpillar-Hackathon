@@ -13,7 +13,7 @@ exports.create = (req, res) => {
     const vehicle = new Vehicle({
         serialNumber: req.body.serialNumber,
         model: req.body.model,
-        inspectionId: req.body.inspectionId,
+        inspectionID: req.body.inspectionID,
         inspectorName: req.body.inspectorName,
         inspectionEmployeeId: req.body.inspectionEmployeeId,
         dateTimeOfInspection: req.body.dateTimeOfInspection,

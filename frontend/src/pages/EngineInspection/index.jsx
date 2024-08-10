@@ -48,13 +48,13 @@ function EngineInspection() {
         setEngineInspections(sliceData(engineInspections, newPage, 5));
     };
 
-    const handleView = (inspectionId) => {
-        console.log(`View engine inspection ${inspectionId}`);
+    const handleView = (inspectionID) => {
+        console.log(`View engine inspection ${inspectionID}`);
     };
 
-    const handleDelete = (inspectionId) => {
-        setEngineInspections(engineInspections.filter(inspection => inspection.id !== inspectionId));
-        setPagination(calculateRange(engineInspections.filter(inspection => inspection.id !== inspectionId), 5));
+    const handleDelete = (inspectionID) => {
+        setEngineInspections(engineInspections.filter(inspection => inspection.id !== inspectionID));
+        setPagination(calculateRange(engineInspections.filter(inspection => inspection.id !== inspectionID), 5));
     };
 
     return (

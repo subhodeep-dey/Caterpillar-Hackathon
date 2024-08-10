@@ -3,7 +3,7 @@ const ExteriorInspection = require('../models/exteriorInspection.model.js');
 // Create and Save a new ExteriorInspection
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.inspectionId) {
+    if (!req.body.inspectionID) {
         return res.status(400).send({
             message: "Inspection ID cannot be empty"
         });
@@ -11,7 +11,7 @@ exports.create = (req, res) => {
 
     // Create an ExteriorInspection
     const exteriorInspection = new ExteriorInspection({
-        inspectionId: req.body.inspectionId,
+        inspectionID: req.body.inspectionID,
         rustDentOrDamage: req.body.rustDentOrDamage,
         oilLeakInSuspension: req.body.oilLeakInSuspension,
         overallSummary: req.body.overallSummary,
@@ -41,40 +41,40 @@ exports.findAll = (req, res) => {
         });
 };
 
-// Find a single exterior inspection with a exteriorInspectionId
+// Find a single exterior inspection with a exteriorinspectionID
 exports.findOne = (req, res) => {
-    ExteriorInspection.findById(req.params.exteriorInspectionId)
+    ExteriorInspection.findById(req.params.exteriorinspectionID)
         .then(exteriorInspection => {
             if (!exteriorInspection) {
                 return res.status(404).send({
-                    message: "ExteriorInspection not found with id " + req.params.exteriorInspectionId
+                    message: "ExteriorInspection not found with id " + req.params.exteriorinspectionID
                 });            
             }
             res.send(exteriorInspection);
         }).catch(err => {
             if (err.kind === 'ObjectId') {
                 return res.status(404).send({
-                    message: "ExteriorInspection not found with id " + req.params.exteriorInspectionId
+                    message: "ExteriorInspection not found with id " + req.params.exteriorinspectionID
                 });                
             }
             return res.status(500).send({
-                message: "Error retrieving exterior inspection with id " + req.params.exteriorInspectionId
+                message: "Error retrieving exterior inspection with id " + req.params.exteriorinspectionID
             });
         });
 };
 
-// Update an exterior inspection identified by the exteriorInspectionId in the request
+// Update an exterior inspection identified by the exteriorinspectionID in the request
 exports.update = (req, res) => {
     // Validate Request
-    if (!req.body.inspectionId) {
+    if (!req.body.inspectionID) {
         return res.status(400).send({
             message: "Inspection ID cannot be empty"
         });
     }
 
     // Find exterior inspection and update it with the request body
-    ExteriorInspection.findByIdAndUpdate(req.params.exteriorInspectionId, {
-        inspectionId: req.body.inspectionId,
+    ExteriorInspection.findByIdAndUpdate(req.params.exteriorinspectionID, {
+        inspectionID: req.body.inspectionID,
         rustDentOrDamage: req.body.rustDentOrDamage,
         oilLeakInSuspension: req.body.oilLeakInSuspension,
         overallSummary: req.body.overallSummary,
@@ -83,40 +83,40 @@ exports.update = (req, res) => {
     .then(exteriorInspection => {
         if (!exteriorInspection) {
             return res.status(404).send({
-                message: "ExteriorInspection not found with id " + req.params.exteriorInspectionId
+                message: "ExteriorInspection not found with id " + req.params.exteriorinspectionID
             });
         }
         res.send(exteriorInspection);
     }).catch(err => {
         if (err.kind === 'ObjectId') {
             return res.status(404).send({
-                message: "ExteriorInspection not found with id " + req.params.exteriorInspectionId
+                message: "ExteriorInspection not found with id " + req.params.exteriorinspectionID
             });                
         }
         return res.status(500).send({
-            message: "Error updating exterior inspection with id " + req.params.exteriorInspectionId
+            message: "Error updating exterior inspection with id " + req.params.exteriorinspectionID
         });
     });
 };
 
-// Delete an exterior inspection with the specified exteriorInspectionId in the request
+// Delete an exterior inspection with the specified exteriorinspectionID in the request
 exports.delete = (req, res) => {
-    ExteriorInspection.findByIdAndRemove(req.params.exteriorInspectionId)
+    ExteriorInspection.findByIdAndRemove(req.params.exteriorinspectionID)
         .then(exteriorInspection => {
             if (!exteriorInspection) {
                 return res.status(404).send({
-                    message: "ExteriorInspection not found with id " + req.params.exteriorInspectionId
+                    message: "ExteriorInspection not found with id " + req.params.exteriorinspectionID
                 });
             }
             res.send({ message: "ExteriorInspection deleted successfully!" });
         }).catch(err => {
             if (err.kind === 'ObjectId' || err.name === 'NotFound') {
                 return res.status(404).send({
-                    message: "ExteriorInspection not found with id " + req.params.exteriorInspectionId
+                    message: "ExteriorInspection not found with id " + req.params.exteriorinspectionID
                 });                
             }
             return res.status(500).send({
-                message: "Could not delete exterior inspection with id " + req.params.exteriorInspectionId
+                message: "Could not delete exterior inspection with id " + req.params.exteriorinspectionID
             });
         });
 };

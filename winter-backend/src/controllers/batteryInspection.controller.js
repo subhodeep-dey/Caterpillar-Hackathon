@@ -3,7 +3,7 @@ const BatteryInspection = require('../models/batteryInspection.model.js');
 // Create and Save a new BatteryInspection
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.inspectionId) {
+    if (!req.body.inspectionID) {
         return res.status(400).send({
             message: "Inspection ID cannot be empty"
         });
@@ -11,7 +11,7 @@ exports.create = (req, res) => {
 
     // Create a BatteryInspection
     const batteryInspection = new BatteryInspection({
-        inspectionId: req.body.inspectionId,
+        inspectionID: req.body.inspectionID,
         batteryMake: req.body.batteryMake,
         batteryReplacementDate: req.body.batteryReplacementDate,
         batteryVoltage: req.body.batteryVoltage,
@@ -45,40 +45,40 @@ exports.findAll = (req, res) => {
         });
 };
 
-// Find a single battery inspection with a batteryInspectionId
+// Find a single battery inspection with a batteryinspectionID
 exports.findOne = (req, res) => {
-    BatteryInspection.findById(req.params.batteryInspectionId)
+    BatteryInspection.findById(req.params.batteryinspectionID)
         .then(batteryInspection => {
             if (!batteryInspection) {
                 return res.status(404).send({
-                    message: "BatteryInspection not found with id " + req.params.batteryInspectionId
+                    message: "BatteryInspection not found with id " + req.params.batteryinspectionID
                 });            
             }
             res.send(batteryInspection);
         }).catch(err => {
             if (err.kind === 'ObjectId') {
                 return res.status(404).send({
-                    message: "BatteryInspection not found with id " + req.params.batteryInspectionId
+                    message: "BatteryInspection not found with id " + req.params.batteryinspectionID
                 });                
             }
             return res.status(500).send({
-                message: "Error retrieving battery inspection with id " + req.params.batteryInspectionId
+                message: "Error retrieving battery inspection with id " + req.params.batteryinspectionID
             });
         });
 };
 
-// Update a battery inspection identified by the batteryInspectionId in the request
+// Update a battery inspection identified by the batteryinspectionID in the request
 exports.update = (req, res) => {
     // Validate Request
-    if (!req.body.inspectionId) {
+    if (!req.body.inspectionID) {
         return res.status(400).send({
             message: "Inspection ID cannot be empty"
         });
     }
 
     // Find battery inspection and update it with the request body
-    BatteryInspection.findByIdAndUpdate(req.params.batteryInspectionId, {
-        inspectionId: req.body.inspectionId,
+    BatteryInspection.findByIdAndUpdate(req.params.batteryinspectionID, {
+        inspectionID: req.body.inspectionID,
         batteryMake: req.body.batteryMake,
         batteryReplacementDate: req.body.batteryReplacementDate,
         batteryVoltage: req.body.batteryVoltage,
@@ -91,40 +91,40 @@ exports.update = (req, res) => {
     .then(batteryInspection => {
         if (!batteryInspection) {
             return res.status(404).send({
-                message: "BatteryInspection not found with id " + req.params.batteryInspectionId
+                message: "BatteryInspection not found with id " + req.params.batteryinspectionID
             });
         }
         res.send(batteryInspection);
     }).catch(err => {
         if (err.kind === 'ObjectId') {
             return res.status(404).send({
-                message: "BatteryInspection not found with id " + req.params.batteryInspectionId
+                message: "BatteryInspection not found with id " + req.params.batteryinspectionID
             });                
         }
         return res.status(500).send({
-            message: "Error updating battery inspection with id " + req.params.batteryInspectionId
+            message: "Error updating battery inspection with id " + req.params.batteryinspectionID
         });
     });
 };
 
-// Delete a battery inspection with the specified batteryInspectionId in the request
+// Delete a battery inspection with the specified batteryinspectionID in the request
 exports.delete = (req, res) => {
-    BatteryInspection.findByIdAndRemove(req.params.batteryInspectionId)
+    BatteryInspection.findByIdAndRemove(req.params.batteryinspectionID)
         .then(batteryInspection => {
             if (!batteryInspection) {
                 return res.status(404).send({
-                    message: "BatteryInspection not found with id " + req.params.batteryInspectionId
+                    message: "BatteryInspection not found with id " + req.params.batteryinspectionID
                 });
             }
             res.send({ message: "BatteryInspection deleted successfully!" });
         }).catch(err => {
             if (err.kind === 'ObjectId' || err.name === 'NotFound') {
                 return res.status(404).send({
-                    message: "BatteryInspection not found with id " + req.params.batteryInspectionId
+                    message: "BatteryInspection not found with id " + req.params.batteryinspectionID
                 });                
             }
             return res.status(500).send({
-                message: "Could not delete battery inspection with id " + req.params.batteryInspectionId
+                message: "Could not delete battery inspection with id " + req.params.batteryinspectionID
             });
         });
 };

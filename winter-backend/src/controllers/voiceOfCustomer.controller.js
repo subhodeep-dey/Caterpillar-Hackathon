@@ -3,7 +3,7 @@ const VoiceOfCustomer = require('../models/voiceOfCustomer.model.js');
 // Create and Save a new VoiceOfCustomer
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.inspectionId) {
+    if (!req.body.inspectionID) {
         return res.status(400).send({
             message: "Inspection ID cannot be empty"
         });
@@ -11,7 +11,7 @@ exports.create = (req, res) => {
 
     // Create a VoiceOfCustomer
     const voiceOfCustomer = new VoiceOfCustomer({
-        inspectionId: req.body.inspectionId,
+        inspectionID: req.body.inspectionID,
         feedback: req.body.feedback,
         images: req.body.images
     });
@@ -64,7 +64,7 @@ exports.findOne = (req, res) => {
 // Update a voice of customer record identified by the voiceOfCustomerId in the request
 exports.update = (req, res) => {
     // Validate Request
-    if (!req.body.inspectionId) {
+    if (!req.body.inspectionID) {
         return res.status(400).send({
             message: "Inspection ID cannot be empty"
         });
@@ -72,7 +72,7 @@ exports.update = (req, res) => {
 
     // Find voice of customer record and update it with the request body
     VoiceOfCustomer.findByIdAndUpdate(req.params.voiceOfCustomerId, {
-        inspectionId: req.body.inspectionId,
+        inspectionID: req.body.inspectionID,
         feedback: req.body.feedback,
         images: req.body.images
     }, { new: true })

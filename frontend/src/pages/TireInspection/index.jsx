@@ -50,14 +50,14 @@ function TireInspection() {
         setTireInspections(sliceData(tireInspections, new_page, 5));
     };
 
-    const handleView = (inspectionId) => {
+    const handleView = (inspectionID) => {
         // Implement view logic here
-        console.log(`View inspection ${inspectionId}`);
+        console.log(`View inspection ${inspectionID}`);
     };
 
-    const handleDelete = (inspectionId) => {
-        setTireInspections(tireInspections.filter(inspection => inspection.id !== inspectionId));
-        setPagination(calculateRange(tireInspections.filter(inspection => inspection.id !== inspectionId), 5));
+    const handleDelete = (inspectionID) => {
+        setTireInspections(tireInspections.filter(inspection => inspection.id !== inspectionID));
+        setPagination(calculateRange(tireInspections.filter(inspection => inspection.id !== inspectionID), 5));
     };
 
     return (

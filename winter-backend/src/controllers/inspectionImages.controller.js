@@ -3,7 +3,7 @@ const InspectionImages = require('../models/inspectionImage.model.js');
 // Create and Save a new InspectionImage
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.inspectionId || !req.body.imageUrl) {
+    if (!req.body.inspectionID || !req.body.imageUrl) {
         return res.status(400).send({
             message: "Inspection ID and image URL cannot be empty"
         });
@@ -11,7 +11,7 @@ exports.create = (req, res) => {
 
     // Create an InspectionImage
     const inspectionImage = new InspectionImages({
-        inspectionId: req.body.inspectionId,
+        inspectionID: req.body.inspectionID,
         imageUrl: req.body.imageUrl,
         description: req.body.description || ""
     });
@@ -64,7 +64,7 @@ exports.findOne = (req, res) => {
 // Update an inspection image identified by the imageId in the request
 exports.update = (req, res) => {
     // Validate Request
-    if (!req.body.inspectionId || !req.body.imageUrl) {
+    if (!req.body.inspectionID || !req.body.imageUrl) {
         return res.status(400).send({
             message: "Inspection ID and image URL cannot be empty"
         });
@@ -72,7 +72,7 @@ exports.update = (req, res) => {
 
     // Find inspection image and update it with the request body
     InspectionImages.findByIdAndUpdate(req.params.imageId, {
-        inspectionId: req.body.inspectionId,
+        inspectionID: req.body.inspectionID,
         imageUrl: req.body.imageUrl,
         description: req.body.description || ""
     }, { new: true })

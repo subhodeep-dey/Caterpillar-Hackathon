@@ -10,12 +10,12 @@ router.post('/', exteriorInspectionController.create);
 router.get('/', exteriorInspectionController.findAll);
 
 // Retrieve a single ExteriorInspection by ID
-router.get('/:exteriorInspectionId', exteriorInspectionController.findOne);
+router.get('/:exteriorinspectionID', exteriorInspectionController.findOne);
 
 // Update an ExteriorInspection by ID
-router.put('/:exteriorInspectionId', exteriorInspectionController.update);
+router.put('/:exteriorinspectionID', exteriorInspectionController.update);
 
 // Delete an ExteriorInspection by ID
-router.delete('/:exteriorInspectionId', exteriorInspectionController.delete);
+router.delete('/:exteriorinspectionID', exteriorInspectionController.delete);
 
 module.exports = router;

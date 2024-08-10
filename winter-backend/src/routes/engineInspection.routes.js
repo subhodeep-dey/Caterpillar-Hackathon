@@ -10,12 +10,12 @@ router.post('/', engineInspectionController.create);
 router.get('/', engineInspectionController.findAll);
 
 // Retrieve a single EngineInspection by ID
-router.get('/:engineInspectionId', engineInspectionController.findOne);
+router.get('/:engineinspectionID', engineInspectionController.findOne);
 
 // Update an EngineInspection by ID
-router.put('/:engineInspectionId', engineInspectionController.update);
+router.put('/:engineinspectionID', engineInspectionController.update);
 
 // Delete an EngineInspection by ID
-router.delete('/:engineInspectionId', engineInspectionController.delete);
+router.delete('/:engineinspectionID', engineInspectionController.delete);
 
 module.exports = router;

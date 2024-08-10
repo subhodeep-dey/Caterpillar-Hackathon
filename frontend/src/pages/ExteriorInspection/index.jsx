@@ -48,13 +48,13 @@ function ExteriorInspection() {
         setExteriorInspections(sliceData(exteriorInspections, new_page, 5));
     };
 
-    const handleView = (inspectionId) => {
-        console.log(`View exterior inspection ${inspectionId}`);
+    const handleView = (inspectionID) => {
+        console.log(`View exterior inspection ${inspectionID}`);
     };
 
-    const handleDelete = (inspectionId) => {
-        setExteriorInspections(exteriorInspections.filter(inspection => inspection.id !== inspectionId));
-        setPagination(calculateRange(exteriorInspections.filter(inspection => inspection.id !== inspectionId), 5));
+    const handleDelete = (inspectionID) => {
+        setExteriorInspections(exteriorInspections.filter(inspection => inspection.id !== inspectionID));
+        setPagination(calculateRange(exteriorInspections.filter(inspection => inspection.id !== inspectionID), 5));
     };
 
     return (

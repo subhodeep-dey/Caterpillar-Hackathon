@@ -48,13 +48,13 @@ function BatteryInspection() {
         setBatteryInspections(sliceData(batteryInspections, new_page, 5));
     };
 
-    const handleView = (inspectionId) => {
-        console.log(`View battery inspection ${inspectionId}`);
+    const handleView = (inspectionID) => {
+        console.log(`View battery inspection ${inspectionID}`);
     };
 
-    const handleDelete = (inspectionId) => {
-        setBatteryInspections(batteryInspections.filter(inspection => inspection.id !== inspectionId));
-        setPagination(calculateRange(batteryInspections.filter(inspection => inspection.id !== inspectionId), 5));
+    const handleDelete = (inspectionID) => {
+        setBatteryInspections(batteryInspections.filter(inspection => inspection.id !== inspectionID));
+        setPagination(calculateRange(batteryInspections.filter(inspection => inspection.id !== inspectionID), 5));
     };
 
     return (

@@ -10,12 +10,12 @@ router.post('/', inspectionController.create);
 router.get('/', inspectionController.findAll);
 
 // Retrieve a single Inspection by ID
-router.get('/:inspectionId', inspectionController.findOne);
+router.get('/:inspectionID', inspectionController.findOne);
 
 // Update an Inspection by ID
-router.put('/:inspectionId', inspectionController.update);
+router.put('/:inspectionID', inspectionController.update);
 
 // Delete an Inspection by ID
-router.delete('/:inspectionId', inspectionController.delete);
+router.delete('/:inspectionID', inspectionController.delete);
 
 module.exports = router;

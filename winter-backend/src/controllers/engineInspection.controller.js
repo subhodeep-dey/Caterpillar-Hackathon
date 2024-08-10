@@ -3,7 +3,7 @@ const EngineInspection = require('../models/engineInspection.model.js');
 // Create and Save a new EngineInspection
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.inspectionId) {
+    if (!req.body.inspectionID) {
         return res.status(400).send({
             message: "Inspection ID cannot be empty"
         });
@@ -11,7 +11,7 @@ exports.create = (req, res) => {
 
     // Create an EngineInspection
     const engineInspection = new EngineInspection({
-        inspectionId: req.body.inspectionId,
+        inspectionID: req.body.inspectionID,
         rustDentsOrDamage: req.body.rustDentsOrDamage,
         engineOilCondition: req.body.engineOilCondition,
         engineOilColor: req.body.engineOilColor,
@@ -45,40 +45,40 @@ exports.findAll = (req, res) => {
         });
 };
 
-// Find a single engine inspection with a engineInspectionId
+// Find a single engine inspection with a engineinspectionID
 exports.findOne = (req, res) => {
-    EngineInspection.findById(req.params.engineInspectionId)
+    EngineInspection.findById(req.params.engineinspectionID)
         .then(engineInspection => {
             if (!engineInspection) {
                 return res.status(404).send({
-                    message: "EngineInspection not found with id " + req.params.engineInspectionId
+                    message: "EngineInspection not found with id " + req.params.engineinspectionID
                 });            
             }
             res.send(engineInspection);
         }).catch(err => {
             if (err.kind === 'ObjectId') {
                 return res.status(404).send({
-                    message: "EngineInspection not found with id " + req.params.engineInspectionId
+                    message: "EngineInspection not found with id " + req.params.engineinspectionID
                 });                
             }
             return res.status(500).send({
-                message: "Error retrieving engine inspection with id " + req.params.engineInspectionId
+                message: "Error retrieving engine inspection with id " + req.params.engineinspectionID
             });
         });
 };
 
-// Update an engine inspection identified by the engineInspectionId in the request
+// Update an engine inspection identified by the engineinspectionID in the request
 exports.update = (req, res) => {
     // Validate Request
-    if (!req.body.inspectionId) {
+    if (!req.body.inspectionID) {
         return res.status(400).send({
             message: "Inspection ID cannot be empty"
         });
     }
 
     // Find engine inspection and update it with the request body
-    EngineInspection.findByIdAndUpdate(req.params.engineInspectionId, {
-        inspectionId: req.body.inspectionId,
+    EngineInspection.findByIdAndUpdate(req.params.engineinspectionID, {
+        inspectionID: req.body.inspectionID,
         rustDentsOrDamage: req.body.rustDentsOrDamage,
         engineOilCondition: req.body.engineOilCondition,
         engineOilColor: req.body.engineOilColor,
@@ -91,40 +91,40 @@ exports.update = (req, res) => {
     .then(engineInspection => {
         if (!engineInspection) {
             return res.status(404).send({
-                message: "EngineInspection not found with id " + req.params.engineInspectionId
+                message: "EngineInspection not found with id " + req.params.engineinspectionID
             });
         }
         res.send(engineInspection);
     }).catch(err => {
         if (err.kind === 'ObjectId') {
             return res.status(404).send({
-                message: "EngineInspection not found with id " + req.params.engineInspectionId
+                message: "EngineInspection not found with id " + req.params.engineinspectionID
             });                
         }
         return res.status(500).send({
-            message: "Error updating engine inspection with id " + req.params.engineInspectionId
+            message: "Error updating engine inspection with id " + req.params.engineinspectionID
         });
     });
 };
 
-// Delete an engine inspection with the specified engineInspectionId in the request
+// Delete an engine inspection with the specified engineinspectionID in the request
 exports.delete = (req, res) => {
-    EngineInspection.findByIdAndRemove(req.params.engineInspectionId)
+    EngineInspection.findByIdAndRemove(req.params.engineinspectionID)
         .then(engineInspection => {
             if (!engineInspection) {
                 return res.status(404).send({
-                    message: "EngineInspection not found with id " + req.params.engineInspectionId
+                    message: "EngineInspection not found with id " + req.params.engineinspectionID
                 });
             }
             res.send({ message: "EngineInspection deleted successfully!" });
         }).catch(err => {
             if (err.kind === 'ObjectId' || err.name === 'NotFound') {
                 return res.status(404).send({
-                    message: "EngineInspection not found with id " + req.params.engineInspectionId
+                    message: "EngineInspection not found with id " + req.params.engineinspectionID
                 });                
             }
             return res.status(500).send({
-                message: "Could not delete engine inspection with id " + req.params.engineInspectionId
+                message: "Could not delete engine inspection with id " + req.params.engineinspectionID
             });
         });
 };

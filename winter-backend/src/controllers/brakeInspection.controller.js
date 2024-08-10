@@ -3,7 +3,7 @@ const BrakeInspection = require('../models/brakeInspection.model.js');
 // Create and Save a new BrakeInspection
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.inspectionId) {
+    if (!req.body.inspectionID) {
         return res.status(400).send({
             message: "Inspection ID cannot be empty"
         });
@@ -11,7 +11,7 @@ exports.create = (req, res) => {
 
     // Create a BrakeInspection
     const brakeInspection = new BrakeInspection({
-        inspectionId: req.body.inspectionId,
+        inspectionID: req.body.inspectionID,
         brakeFluidLevel: req.body.brakeFluidLevel,
         brakeConditionFront: req.body.brakeConditionFront,
         brakeConditionRear: req.body.brakeConditionRear,
@@ -43,40 +43,40 @@ exports.findAll = (req, res) => {
         });
 };
 
-// Find a single brake inspection with a brakeInspectionId
+// Find a single brake inspection with a brakeinspectionID
 exports.findOne = (req, res) => {
-    BrakeInspection.findById(req.params.brakeInspectionId)
+    BrakeInspection.findById(req.params.brakeinspectionID)
         .then(brakeInspection => {
             if (!brakeInspection) {
                 return res.status(404).send({
-                    message: "BrakeInspection not found with id " + req.params.brakeInspectionId
+                    message: "BrakeInspection not found with id " + req.params.brakeinspectionID
                 });            
             }
             res.send(brakeInspection);
         }).catch(err => {
             if (err.kind === 'ObjectId') {
                 return res.status(404).send({
-                    message: "BrakeInspection not found with id " + req.params.brakeInspectionId
+                    message: "BrakeInspection not found with id " + req.params.brakeinspectionID
                 });                
             }
             return res.status(500).send({
-                message: "Error retrieving brake inspection with id " + req.params.brakeInspectionId
+                message: "Error retrieving brake inspection with id " + req.params.brakeinspectionID
             });
         });
 };
 
-// Update a brake inspection identified by the brakeInspectionId in the request
+// Update a brake inspection identified by the brakeinspectionID in the request
 exports.update = (req, res) => {
     // Validate Request
-    if (!req.body.inspectionId) {
+    if (!req.body.inspectionID) {
         return res.status(400).send({
             message: "Inspection ID cannot be empty"
         });
     }
 
     // Find brake inspection and update it with the request body
-    BrakeInspection.findByIdAndUpdate(req.params.brakeInspectionId, {
-        inspectionId: req.body.inspectionId,
+    BrakeInspection.findByIdAndUpdate(req.params.brakeinspectionID, {
+        inspectionID: req.body.inspectionID,
         brakeFluidLevel: req.body.brakeFluidLevel,
         brakeConditionFront: req.body.brakeConditionFront,
         brakeConditionRear: req.body.brakeConditionRear,
@@ -87,40 +87,40 @@ exports.update = (req, res) => {
     .then(brakeInspection => {
         if (!brakeInspection) {
             return res.status(404).send({
-                message: "BrakeInspection not found with id " + req.params.brakeInspectionId
+                message: "BrakeInspection not found with id " + req.params.brakeinspectionID
             });
         }
         res.send(brakeInspection);
     }).catch(err => {
         if (err.kind === 'ObjectId') {
             return res.status(404).send({
-                message: "BrakeInspection not found with id " + req.params.brakeInspectionId
+                message: "BrakeInspection not found with id " + req.params.brakeinspectionID
             });                
         }
         return res.status(500).send({
-            message: "Error updating brake inspection with id " + req.params.brakeInspectionId
+            message: "Error updating brake inspection with id " + req.params.brakeinspectionID
         });
     });
 };
 
-// Delete a brake inspection with the specified brakeInspectionId in the request
+// Delete a brake inspection with the specified brakeinspectionID in the request
 exports.delete = (req, res) => {
-    BrakeInspection.findByIdAndRemove(req.params.brakeInspectionId)
+    BrakeInspection.findByIdAndRemove(req.params.brakeinspectionID)
         .then(brakeInspection => {
             if (!brakeInspection) {
                 return res.status(404).send({
-                    message: "BrakeInspection not found with id " + req.params.brakeInspectionId
+                    message: "BrakeInspection not found with id " + req.params.brakeinspectionID
                 });
             }
             res.send({ message: "BrakeInspection deleted successfully!" });
         }).catch(err => {
             if (err.kind === 'ObjectId' || err.name === 'NotFound') {
                 return res.status(404).send({
-                    message: "BrakeInspection not found with id " + req.params.brakeInspectionId
+                    message: "BrakeInspection not found with id " + req.params.brakeinspectionID
                 });                
             }
             return res.status(500).send({
-                message: "Could not delete brake inspection with id " + req.params.brakeInspectionId
+                message: "Could not delete brake inspection with id " + req.params.brakeinspectionID
             });
         });
 };

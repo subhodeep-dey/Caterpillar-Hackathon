@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const tireInspectionSchema = new Schema({
-  inspectionId: { 
+  inspectionID: { 
     type: Schema.Types.ObjectId, 
     ref: 'Inspection', 
     required: true 

@@ -47,29 +47,29 @@ exports.findAll = (req, res) => {
         });
 };
 
-// Find a single inspection with an inspectionId
+// Find a single inspection with an inspectionID
 exports.findOne = (req, res) => {
-    Inspection.findById(req.params.inspectionId)
+    Inspection.findById(req.params.inspectionID)
         .then(inspection => {
             if (!inspection) {
                 return res.status(404).send({
-                    message: "Inspection not found with id " + req.params.inspectionId
+                    message: "Inspection not found with id " + req.params.inspectionID
                 });            
             }
             res.send(inspection);
         }).catch(err => {
             if (err.kind === 'ObjectId') {
                 return res.status(404).send({
-                    message: "Inspection not found with id " + req.params.inspectionId
+                    message: "Inspection not found with id " + req.params.inspectionID
                 });                
             }
             return res.status(500).send({
-                message: "Error retrieving inspection with id " + req.params.inspectionId
+                message: "Error retrieving inspection with id " + req.params.inspectionID
             });
         });
 };
 
-// Update an inspection identified by the inspectionId in the request
+// Update an inspection identified by the inspectionID in the request
 exports.update = (req, res) => {
     // Validate Request
     if (!req.body.truckSerialNumber || !req.body.truckModel) {
@@ -79,7 +79,7 @@ exports.update = (req, res) => {
     }
 
     // Find inspection and update it with the request body
-    Inspection.findByIdAndUpdate(req.params.inspectionId, {
+    Inspection.findByIdAndUpdate(req.params.inspectionID, {
         truckSerialNumber: req.body.truckSerialNumber,
         truckModel: req.body.truckModel,
         inspectorName: req.body.inspectorName || "Unknown Inspector",
@@ -95,40 +95,40 @@ exports.update = (req, res) => {
     .then(inspection => {
         if (!inspection) {
             return res.status(404).send({
-                message: "Inspection not found with id " + req.params.inspectionId
+                message: "Inspection not found with id " + req.params.inspectionID
             });
         }
         res.send(inspection);
     }).catch(err => {
         if (err.kind === 'ObjectId') {
             return res.status(404).send({
-                message: "Inspection not found with id " + req.params.inspectionId
+                message: "Inspection not found with id " + req.params.inspectionID
             });                
         }
         return res.status(500).send({
-            message: "Error updating inspection with id " + req.params.inspectionId
+            message: "Error updating inspection with id " + req.params.inspectionID
         });
     });
 };
 
-// Delete an inspection with the specified inspectionId in the request
+// Delete an inspection with the specified inspectionID in the request
 exports.delete = (req, res) => {
-    Inspection.findByIdAndRemove(req.params.inspectionId)
+    Inspection.findByIdAndRemove(req.params.inspectionID)
         .then(inspection => {
             if (!inspection) {
                 return res.status(404).send({
-                    message: "Inspection not found with id " + req.params.inspectionId
+                    message: "Inspection not found with id " + req.params.inspectionID
                 });
             }
             res.send({ message: "Inspection deleted successfully!" });
         }).catch(err => {
             if (err.kind === 'ObjectId' || err.name === 'NotFound') {
                 return res.status(404).send({
-                    message: "Inspection not found with id " + req.params.inspectionId
+                    message: "Inspection not found with id " + req.params.inspectionID
                 });                
             }
             return res.status(500).send({
-                message: "Could not delete inspection with id " + req.params.inspectionId
+                message: "Could not delete inspection with id " + req.params.inspectionID
             });
         });
 };

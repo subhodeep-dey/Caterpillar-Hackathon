@@ -48,13 +48,13 @@ function BrakeInspection() {
         setBrakeInspections(sliceData(brakeInspections, new_page, 5));
     };
 
-    const handleView = (inspectionId) => {
-        console.log(`View brake inspection ${inspectionId}`);
+    const handleView = (inspectionID) => {
+        console.log(`View brake inspection ${inspectionID}`);
     };
 
-    const handleDelete = (inspectionId) => {
-        setBrakeInspections(brakeInspections.filter(inspection => inspection.id !== inspectionId));
-        setPagination(calculateRange(brakeInspections.filter(inspection => inspection.id !== inspectionId), 5));
+    const handleDelete = (inspectionID) => {
+        setBrakeInspections(brakeInspections.filter(inspection => inspection.id !== inspectionID));
+        setPagination(calculateRange(brakeInspections.filter(inspection => inspection.id !== inspectionID), 5));
     };
 
     return (

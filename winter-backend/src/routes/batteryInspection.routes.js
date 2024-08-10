@@ -10,12 +10,12 @@ router.post('/', batteryInspectionController.create);
 router.get('/', batteryInspectionController.findAll);
 
 // Retrieve a single BatteryInspection by ID
-router.get('/:batteryInspectionId', batteryInspectionController.findOne);
+router.get('/:batteryinspectionID', batteryInspectionController.findOne);
 
 // Update a BatteryInspection by ID
-router.put('/:batteryInspectionId', batteryInspectionController.update);
+router.put('/:batteryinspectionID', batteryInspectionController.update);
 
 // Delete a BatteryInspection by ID
-router.delete('/:batteryInspectionId', batteryInspectionController.delete);
+router.delete('/:batteryinspectionID', batteryInspectionController.delete);
 
 module.exports = router;

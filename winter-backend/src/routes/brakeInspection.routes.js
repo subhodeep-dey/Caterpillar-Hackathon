@@ -10,12 +10,12 @@ router.post('/', brakeInspectionController.create);
 router.get('/', brakeInspectionController.findAll);
 
 // Retrieve a single BrakeInspection by ID
-router.get('/:brakeInspectionId', brakeInspectionController.findOne);
+router.get('/:brakeinspectionID', brakeInspectionController.findOne);
 
 // Update a BrakeInspection by ID
-router.put('/:brakeInspectionId', brakeInspectionController.update);
+router.put('/:brakeinspectionID', brakeInspectionController.update);
 
 // Delete a BrakeInspection by ID
-router.delete('/:brakeInspectionId', brakeInspectionController.delete);
+router.delete('/:brakeinspectionID', brakeInspectionController.delete);
 
 module.exports = router;

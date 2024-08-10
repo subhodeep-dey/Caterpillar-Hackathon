@@ -10,12 +10,12 @@ router.post('/', tireInspectionController.create);
 router.get('/', tireInspectionController.findAll);
 
 // Retrieve a single TireInspection by ID
-router.get('/:tireInspectionId', tireInspectionController.findOne);
+router.get('/:tireinspectionID', tireInspectionController.findOne);
 
 // Update a TireInspection by ID
-router.put('/:tireInspectionId', tireInspectionController.update);
+router.put('/:tireinspectionID', tireInspectionController.update);
 
 // Delete a TireInspection by ID
-router.delete('/:tireInspectionId', tireInspectionController.delete);
+router.delete('/:tireinspectionID', tireInspectionController.delete);
 
 module.exports = router;
