@@ -1,183 +1,242 @@
-import React, { useState, useEffect } from 'react';
-import './App.css'; // Add your custom CSS here
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationArrow, faMicrophone } from '@fortawesome/free-solid-svg-icons';
+import React, {useState, useEffect} from 'react';
+import './App.css';
+import {AiOutlineDelete, AiOutlineEdit} from 'react-icons/ai';
+import {BsCheckLg} from 'react-icons/bs';
 
-function SummaryForm({ questionnaire }) {
-  return (
-    <div className="p-4">
-      <h2 className="text-lg font-semibold mb-4">Summary of Your Answers</h2>
-      <div className="space-y-4">
-        {questionnaire.map((item, index) => (
-          <div key={index} className="bg-gray-100 p-4 rounded-lg">
-            <p className="font-semibold">{item.field}:</p>
-            <p>{item.answer}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+function App () {
+  const [isCompleteScreen, setIsCompleteScreen] = useState (false);
+  const [allTodos, setTodos] = useState ([]);
+  const [newTitle, setNewTitle] = useState ('');
+  const [newDescription, setNewDescription] = useState ('');
+  const [completedTodos, setCompletedTodos] = useState ([]);
+  const [currentEdit,setCurrentEdit] = useState("");
+  const [currentEditedItem,setCurrentEditedItem] = useState("");
 
-function ChatBot() {
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [questionnaire, setQuestionnaire] = useState([
-    { question: "Enter the truck serial number (e.g., 7301234, 730EJ73245, 73592849, 735EJBC9723):", field: "Truck Serial Number", answer: "" },
-    { question: "Enter the truck model (e.g., 730, 730 EJ, 735, 745):", field: "Truck Model", answer: "" },
-    { question: "Enter the inspector name:", field: "Inspector Name", answer: "" },
-    { question: "Enter the inspection employee ID:", field: "Inspection Employee ID", answer: "" },
-    { question: "Enter the date and time of inspection:", field: "Date & Time of Inspection", answer: "" },
-    // Add the remaining questions here...
-  ]);
-  const [isCompleted, setIsCompleted] = useState(false);
-
-  useEffect(() => {
-    const date = new Date();
-    const hour = date.getHours();
-    const minute = date.getMinutes();
-    const strTime = `${hour}:${minute < 10 ? '0' : ''}${minute}`;
-
-    const firstQuestion = {
-      text: questionnaire[0].question,
-      time: strTime,
-      sender: 'bot',
+  const handleAddTodo = () => {
+    let newTodoItem = {
+      title: newTitle,
+      description: newDescription,
     };
 
-    setMessages([firstQuestion]);
-  }, [questionnaire]);
+    let updatedTodoArr = [...allTodos];
+    updatedTodoArr.push (newTodoItem);
+    setTodos (updatedTodoArr);
+    localStorage.setItem ('todolist', JSON.stringify (updatedTodoArr));
+  };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (!input) return;
+  const handleDeleteTodo = index => {
+    let reducedTodo = [...allTodos];
+    reducedTodo.splice (index);
 
-    const date = new Date();
-    const hour = date.getHours();
-    const minute = date.getMinutes();
-    const strTime = `${hour}:${minute < 10 ? '0' : ''}${minute}`;
+    localStorage.setItem ('todolist', JSON.stringify (reducedTodo));
+    setTodos (reducedTodo);
+  };
 
-    // User's message
-    const userMessage = {
-      text: input,
-      time: strTime,
-      sender: 'user',
+  const handleComplete = index => {
+    let now = new Date ();
+    let dd = now.getDate ();
+    let mm = now.getMonth () + 1;
+    let yyyy = now.getFullYear ();
+    let h = now.getHours ();
+    let m = now.getMinutes ();
+    let s = now.getSeconds ();
+    let completedOn =
+      dd + '-' + mm + '-' + yyyy + ' at ' + h + ':' + m + ':' + s;
+
+    let filteredItem = {
+      ...allTodos[index],
+      completedOn: completedOn,
     };
 
-    setMessages((prevMessages) => [...prevMessages, userMessage]);
-
-    // Store the user's answer to the current question
-    const updatedQuestionnaire = [...questionnaire];
-    updatedQuestionnaire[currentQuestionIndex].answer = input;
-    setQuestionnaire(updatedQuestionnaire);
-
-    setInput('');
-
-    // Check if there are more questions to ask
-    if (currentQuestionIndex < questionnaire.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-
-      // Bot's response (next question)
-      const botMessage = {
-        text: updatedQuestionnaire[currentQuestionIndex + 1].question,
-        time: strTime,
-        sender: 'bot',
-      };
-      setMessages((prevMessages) => [...prevMessages, botMessage]);
-    } else {
-      // End of questionnaire
-      setIsCompleted(true);
-      console.log("Questionnaire completed:", updatedQuestionnaire);
-    }
+    let updatedCompletedArr = [...completedTodos];
+    updatedCompletedArr.push (filteredItem);
+    setCompletedTodos (updatedCompletedArr);
+    handleDeleteTodo (index);
+    localStorage.setItem (
+      'completedTodos',
+      JSON.stringify (updatedCompletedArr)
+    );
   };
 
-  const startDictation = () => {
-    if (window.hasOwnProperty('webkitSpeechRecognition')) {
-      const recognition = new window.webkitSpeechRecognition();
-      recognition.continuous = false;
-      recognition.interimResults = false;
-      recognition.lang = 'en-US';
-      recognition.start();
+  const handleDeleteCompletedTodo = index => {
+    let reducedTodo = [...completedTodos];
+    reducedTodo.splice (index);
 
-      recognition.onresult = function (e) {
-        setInput(e.results[0][0].transcript);
-        recognition.stop();
-      };
-
-      recognition.onerror = function () {
-        recognition.stop();
-      };
-    }
+    localStorage.setItem ('completedTodos', JSON.stringify (reducedTodo));
+    setCompletedTodos (reducedTodo);
   };
+
+  useEffect (() => {
+    let savedTodo = JSON.parse (localStorage.getItem ('todolist'));
+    let savedCompletedTodo = JSON.parse (
+      localStorage.getItem ('completedTodos')
+    );
+    if (savedTodo) {
+      setTodos (savedTodo);
+    }
+
+    if (savedCompletedTodo) {
+      setCompletedTodos (savedCompletedTodo);
+    }
+  }, []);
+
+
+  const handleEdit = (ind,item)=>{
+    console.log(ind);
+    setCurrentEdit(ind);
+    setCurrentEditedItem(item);
+  }
+
+  const handleUpdateTitle = (value)=>{
+    setCurrentEditedItem((prev)=>{
+      return {...prev,title:value}
+    })
+  }
+
+  const handleUpdateDescription = (value)=>{
+    setCurrentEditedItem((prev)=>{
+      return {...prev,description:value}
+    })
+  }
+
+  const handleUpdateToDo = ()=>{
+      let newToDo = [...allTodos];
+      newToDo[currentEdit] = currentEditedItem;
+      setTodos(newToDo);
+      setCurrentEdit("");
+  }
+
+
 
   return (
-    <div className="h-screen flex justify-center items-center bg-gray-100">
-      <div className="w-full max-w-xl">
-        <div className="bg-white shadow-lg rounded-lg">
-          <div className="bg-gray-800 text-white p-4 rounded-t-lg flex items-center">
-            <div>
-              <h2 className="text-lg font-semibold">ChatBot</h2>
-              <p className="text-sm">Answer the questions!</p>
-            </div>
+    <div className="App">
+      <h1>My Todos</h1>
+
+      <div className="todo-wrapper">
+        <div className="todo-input">
+          <div className="todo-input-item">
+            <label>Title</label>
+            <input
+              type="text"
+              value={newTitle}
+              onChange={e => setNewTitle (e.target.value)}
+              placeholder="What's the task title?"
+            />
           </div>
-          <div id="messageFormeight" className="p-4 overflow-y-auto h-96 space-y-4">
-            {isCompleted ? (
-              <SummaryForm questionnaire={questionnaire} />
-            ) : (
-              messages.map((message, index) => (
-                <div
-                  key={index}
-                  className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div
-                    className={`max-w-xs p-3 rounded-lg ${
-                      message.sender === 'user'
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-gray-200 text-gray-800'
-                    }`}
-                  >
-                    <p>{message.text}</p>
+          <div className="todo-input-item">
+            <label>Description</label>
+            <input
+              type="text"
+              value={newDescription}
+              onChange={e => setNewDescription (e.target.value)}
+              placeholder="What's the task description?"
+            />
+          </div>
+          <div className="todo-input-item">
+            <button
+              type="button"
+              onClick={handleAddTodo}
+              className="primaryBtn"
+            >
+              Add
+            </button>
+          </div>
+        </div>
+
+        <div className="btn-area">
+          <button
+            className={`secondaryBtn ${isCompleteScreen === false && 'active'}`}
+            onClick={() => setIsCompleteScreen (false)}
+          >
+            Todo
+          </button>
+          <button
+            className={`secondaryBtn ${isCompleteScreen === true && 'active'}`}
+            onClick={() => setIsCompleteScreen (true)}
+          >
+            Completed
+          </button>
+        </div>
+
+        <div className="todo-list">
+
+          {isCompleteScreen === false &&
+            allTodos.map ((item, index) => {
+              if(currentEdit===index){
+                 return(
+                  <div className='edit__wrapper' key={index}>
+                  <input placeholder='Updated Title' 
+                  onChange={(e)=>handleUpdateTitle(e.target.value)} 
+                  value={currentEditedItem.title}  />
+                  <textarea placeholder='Updated Title' 
+                  rows={4}
+                  onChange={(e)=>handleUpdateDescription(e.target.value)} 
+                  value={currentEditedItem.description}  />
+                   <button
+              type="button"
+              onClick={handleUpdateToDo}
+              className="primaryBtn"
+            >
+              Update
+            </button>
+              </div> 
+                 ) 
+              }else{
+                return (
+                  <div className="todo-list-item" key={index}>
+                    <div>
+                      <h3>{item.title}</h3>
+                      <p>{item.description}</p>
+                    </div>
+  
+                    <div>
+                      <AiOutlineDelete
+                        className="icon"
+                        onClick={() => handleDeleteTodo (index)}
+                        title="Delete?"
+                      />
+                      <BsCheckLg
+                        className="check-icon"
+                        onClick={() => handleComplete (index)}
+                        title="Complete?"
+                      />
+                      <AiOutlineEdit  className="check-icon"
+                        onClick={() => handleEdit (index,item)}
+                        title="Edit?" />
+                    </div>
+  
                   </div>
+                );
+              }
+              
+            })}
+
+          {isCompleteScreen === true &&
+            completedTodos.map ((item, index) => {
+              return (
+                <div className="todo-list-item" key={index}>
+                  <div>
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
+                    <p><small>Completed on: {item.completedOn}</small></p>
+                  </div>
+
+                  <div>
+                    <AiOutlineDelete
+                      className="icon"
+                      onClick={() => handleDeleteCompletedTodo (index)}
+                      title="Delete?"
+                    />
+                  </div>
+
                 </div>
-              ))
-            )}
-          </div>
-          {!isCompleted && (
-            <div className="bg-gray-100 p-4 rounded-b-lg">
-              <form id="messageArea" className="flex" onSubmit={handleSubmit}>
-                <input
-                  type="text"
-                  id="text"
-                  name="msg"
-                  placeholder="Type your answer..."
-                  autoComplete="off"
-                  className="w-full p-3 rounded-l-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  required
-                />
-                <button
-                  type="button"
-                  id="dictate"
-                  className="bg-blue-500 text-white p-3 rounded-r-none hover:bg-blue-600"
-                  onClick={startDictation}
-                >
-                  <FontAwesomeIcon icon={faMicrophone} />
-                </button>
-                <button
-                  type="submit"
-                  id="send"
-                  className="bg-blue-500 text-white p-3 rounded-r-lg hover:bg-blue-600"
-                >
-                  <FontAwesomeIcon icon={faLocationArrow} />
-                </button>
-              </form>
-            </div>
-          )}
+              );
+            })}
+
         </div>
       </div>
     </div>
   );
 }
 
-export default ChatBot;
+export default App;
