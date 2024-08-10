@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha tests/*.js --exit",
-    "start": "nodemon --exec babel-node index.js",
-    "vercel-build": "vercel dev"
+    "start": "nodemon --exec babel-node index.js"
   },
   "repository": {
     "type": "git",
