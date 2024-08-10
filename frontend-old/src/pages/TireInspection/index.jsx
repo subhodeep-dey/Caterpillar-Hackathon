@@ -1,43 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import DashboardHeader from '../../components/DashboardHeader';
-import CreateExteriorInspectionModal from './CreateExteriorInspectionModal';
+import CreateTireInspectionModal from './createTireInspectionModal';
 import { calculateRange, sliceData } from '../../utils/table-pagination';
 import '../styles.css';
 
-function ExteriorInspection() {
+function TireInspection() {
     const [search, setSearch] = useState('');
-    const [exteriorInspections, setExteriorInspections] = useState([]);
+    const [tireInspections, setTireInspections] = useState([]); // Initialize empty state
     const [page, setPage] = useState(1);
     const [pagination, setPagination] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
-        // Assume initial fetch or setting dummy data for exteriors
-        const dummyData = []; // This would ideally be fetched from a server
+        // Fetch initial data or set dummy data
+        const dummyData = []; // Add your initial data here
         setPagination(calculateRange(dummyData, 5));
-        setExteriorInspections(sliceData(dummyData, page, 5));
+        setTireInspections(sliceData(dummyData, page, 5));
     }, []);
 
-    const handleNewInspection = (exteriorDetails) => {
-        if (exteriorDetails) {
+    const handleNewInspection = (inspectionName) => {
+        if (inspectionName) {
             const newInspection = {
-                id: exteriorInspections.length + 1,
-                ...exteriorDetails,
-                status: 'Pending',
+                id: tireInspections.length + 1,
+                asset: "XYZ",
+                date: new Date().toLocaleDateString(),
+                name: inspectionName,
+                condition: 'Pending',
             };
-            setExteriorInspections([...exteriorInspections, newInspection]);
+            setTireInspections([...tireInspections, newInspection]);
             setPage(1);
-            setPagination(calculateRange([...exteriorInspections, newInspection], 5));
+            setPagination(calculateRange([...tireInspections, newInspection], 5));
         }
     };
 
     const __handleSearch = (event) => {
         setSearch(event.target.value);
         if (event.target.value !== '') {
-            let search_results = exteriorInspections.filter((item) =>
-                item.model.toLowerCase().includes(search.toLowerCase())
+            let search_results = tireInspections.filter((item) =>
+                item.name.toLowerCase().includes(search.toLowerCase())
             );
-            setExteriorInspections(search_results);
+            setTireInspections(search_results);
         } else {
             __handleChangePage(1);
         }
@@ -45,25 +47,26 @@ function ExteriorInspection() {
 
     const __handleChangePage = (new_page) => {
         setPage(new_page);
-        setExteriorInspections(sliceData(exteriorInspections, new_page, 5));
+        setTireInspections(sliceData(tireInspections, new_page, 5));
     };
 
     const handleView = (inspectionId) => {
-        console.log(`View exterior inspection ${inspectionId}`);
+        // Implement view logic here
+        console.log(`View inspection ${inspectionId}`);
     };
 
     const handleDelete = (inspectionId) => {
-        setExteriorInspections(exteriorInspections.filter(inspection => inspection.id !== inspectionId));
-        setPagination(calculateRange(exteriorInspections.filter(inspection => inspection.id !== inspectionId), 5));
+        setTireInspections(tireInspections.filter(inspection => inspection.id !== inspectionId));
+        setPagination(calculateRange(tireInspections.filter(inspection => inspection.id !== inspectionId), 5));
     };
 
     return (
         <div className='dashboard-content'>
             <DashboardHeader
                 onClick={() => setIsModalOpen(true)}
-                btnText="New Exterior Inspection" />
+                btnText="New Tire Inspection" />
 
-            <CreateExteriorInspectionModal
+            <CreateTireInspectionModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 onCreate={handleNewInspection}
@@ -71,12 +74,12 @@ function ExteriorInspection() {
 
             <div className='dashboard-content-container'>
                 <div className='dashboard-content-header'>
-                    <h2>Exterior Inspection List</h2>
+                    <h2>Tire Inspection List</h2>
                     <div className='dashboard-content-search'>
                         <input
                             type='text'
                             value={search}
-                            placeholder='Search by model...'
+                            placeholder='Search..'
                             className='dashboard-content-input'
                             onChange={e => __handleSearch(e)} />
                     </div>
@@ -86,26 +89,26 @@ function ExteriorInspection() {
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Vehicle Model</th>
-                            <th>Inspection Report</th>
-                            <th>Status</th>
-                            <th>Date</th>
-                            <th>Action</th>
+                            <th>ASSET</th>
+                            <th>INSPECTION NAME</th>
+                            <th>CONDITION</th>
+                            <th>DATE</th>
+                            <th>ACTION</th>
                         </tr>
                     </thead>
 
-                    {exteriorInspections.length !== 0 ?
+                    {tireInspections.length !== 0 ?
                         <tbody>
-                            {exteriorInspections.map((inspection, index) => (
+                            {tireInspections.map((inspection, index) => (
                                 <tr key={index}>
                                     <td><span>{inspection.id}</span></td>
-                                    <td><span>{inspection.model}</span></td>
+                                    <td><span>{inspection.asset}</span></td>
                                     <td>
                                         <div>
-                                            <span>{inspection.reportName}</span>
+                                            <span>{inspection.name}</span>
                                         </div>
                                     </td>
-                                    <td><span>{inspection.status}</span></td>
+                                    <td><span>{inspection.condition}</span></td>
                                     <td><span>{inspection.date}</span></td>
                                     <td>
                                         <button onClick={() => handleView(inspection.id)}>View</button>
@@ -114,10 +117,10 @@ function ExteriorInspection() {
                                 </tr>
                             ))}
                         </tbody>
-                        : <tr><td colSpan="6">No data available</td></tr>}
+                        : null}
                 </table>
 
-                {exteriorInspections.length !== 0 ?
+                {tireInspections.length !== 0 ?
                     <div className='dashboard-content-footer'>
                         {pagination.map((item, index) => (
                             <span
@@ -138,4 +141,4 @@ function ExteriorInspection() {
     );
 }
 
-export default ExteriorInspection;
+export default TireInspection;

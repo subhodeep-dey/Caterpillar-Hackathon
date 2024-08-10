@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./createBatteryInspectionModal.css";
+import "./createTireInspectionModal.css";
 
-function createBatteryInspectionModal({ isOpen, onClose, onCreate }) {
-  const [reportName, setReportName] = useState("");
+function CreateTireInspectionModal({ isOpen, onClose, onCreate }) {
+  const [inspectionName, setInspectionName] = useState("");
   const navigate = useNavigate();
 
   if (!isOpen) return null;
@@ -11,22 +11,22 @@ function createBatteryInspectionModal({ isOpen, onClose, onCreate }) {
   return (
     <div className="modal-backdrop">
       <div className="modal-content">
-        <h2>Create New Report</h2>
+        <h2>Create New Tire Inspection</h2>
         <input
           type="text"
-          placeholder="Enter report name"
-          value={reportName}
-          onChange={(e) => setReportName(e.target.value)}
+          placeholder="Enter inspection name"
+          value={inspectionName}
+          onChange={(e) => setInspectionName(e.target.value)}
           className="modal-input"
         />
         <button
           onClick={() => {
-            onCreate(reportName);
+            onCreate(inspectionName);
             onClose();
-            navigate("/fillBatteryInspection");
+            navigate("/fillTireInspection");
           }}
         >
-          Create Report
+          Create Inspection
         </button>
         <button onClick={onClose}>Cancel</button>
       </div>
@@ -34,4 +34,4 @@ function createBatteryInspectionModal({ isOpen, onClose, onCreate }) {
   );
 }
 
-export default createBatteryInspectionModal;
+export default CreateTireInspectionModal;

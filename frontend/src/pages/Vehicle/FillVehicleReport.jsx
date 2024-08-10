@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-function FillReport() {
+function FillVehicleReport() {
     const location = useLocation();
     const navigate = useNavigate();
     const [recognition, setRecognition] = useState(null);
@@ -37,7 +37,7 @@ function FillReport() {
         }
     };
     const discardReport = () => {
-        navigate('/reports');
+        navigate('/vehicle');
     };
     const generateReport = () => {
         // Implement report generation logic here
@@ -56,29 +56,26 @@ function FillReport() {
             <h2>Manual Entry</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px' }}>
                 <label>
-                    ASSET:
-                    <input type="text" name="asset" style={{ marginLeft: '10px', padding: '5px', width: '200px' }} />
+                    Serial Number:
+                    <input type="text" name="serialNumber" required style={{ marginLeft: '10px', padding: '5px', width: '200px' }} maxLength={50} />
                 </label>
                 <label>
-                    REPORT NAME:
-                    <input type="text" name="reportName" style={{ marginLeft: '10px', padding: '5px', width: '200px' }} />
+                    Model:
+                    <input type="text" name="model" required style={{ marginLeft: '10px', padding: '5px', width: '200px' }} maxLength={50} />
                 </label>
                 <label>
-                    CONDITION:
-                    <input type="text" name="condition" style={{ marginLeft: '10px', padding: '5px', width: '200px' }} />
+                    Customer Name:
+                    <input type="text" name="customerName" required style={{ marginLeft: '10px', padding: '5px', width: '200px' }} maxLength={100} />
                 </label>
                 <label>
-                    DATE:
-                    <input type="date" name="date" style={{ marginLeft: '10px', padding: '5px', width: '200px' }} />
+                    CAT Customer ID:
+                    <input type="text" name="catCustomerID" required style={{ marginLeft: '10px', padding: '5px', width: '200px' }} maxLength={50} />
                 </label>
-                <label>
-                    ACTION:
-                    <input type="text" name="action" style={{ marginLeft: '10px', padding: '5px', width: '200px' }} />
-                </label>
-                </div>
+            </div>
+
             <button onClick={generateReport} style={{ marginTop: '20px', padding: '10px', fontSize: '16px' }}>Generate Report</button>
         </div>
     );
 }
 
-export default FillReport;
+export default FillVehicleReport;

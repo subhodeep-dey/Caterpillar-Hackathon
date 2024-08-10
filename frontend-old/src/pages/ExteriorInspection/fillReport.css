@@ -1,0 +1,71 @@
+/* General Page Styles */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: #222; /* Dark background for the page */
+  color: #f1c40f; /* Yellow text color */
+  min-height: 100vh; /* Full viewport height */
+  text-align: center; /* Center text alignment */
+}
+
+/* Centering Header and Paragraph */
+.header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #f1c40f; /* Yellow color for the header */
+}
+
+p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+/* Button Container */
+.button-container {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+  margin-top: 20px;
+}
+
+/* Buttons */
+button {
+  background-color: #f1c40f; /* Yellow button color */
+  color: black; /* Black text color for button */
+  border: none;
+  border-radius: 4px;
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+  margin-bottom: 50px;
+}
+
+button:hover {
+  background-color: #000000; /* Darker yellow shade on hover */
+  color: white;
+}
+
+/* Textarea */
+textarea {
+  background: #333; /* Darker background for textarea */
+  color: #f1c40f; /* Yellow text color for textarea */
+  border: 1px solid #f1c40f; /* Yellow border */
+  border-radius: 4px;
+  padding: 12px;
+  width: 100%;
+  max-width: 600px; /* Max width for larger screens */
+  height: 200px; /* Height of the textarea */
+  font-size: 16px;
+  resize: vertical; /* Allow vertical resizing */
+  box-sizing: border-box; /* Ensure padding is included in width/height */
+}

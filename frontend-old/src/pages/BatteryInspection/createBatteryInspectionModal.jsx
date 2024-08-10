@@ -23,7 +23,7 @@ function createBatteryInspectionModal({ isOpen, onClose, onCreate }) {
           onClick={() => {
             onCreate(reportName);
             onClose();
-            navigate("/fillBatteryInspection");
+            navigate("/fillreport");
           }}
         >
           Create Report

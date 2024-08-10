@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-function FillEngineReport() {
+function FillBrakeReport() {
     const location = useLocation();
     const navigate = useNavigate();
     const [recognition, setRecognition] = useState(null);
@@ -60,50 +60,40 @@ function FillEngineReport() {
                     <input type="text" name="inspectionID" placeholder="Enter Inspection ID" required style={{ marginLeft: '10px', padding: '5px', width: '200px' }} />
                 </label>
                 <label>
-                    Rust, Dent, or Damage:
-                    <input type="checkbox" name="rustDentOrDamage" required style={{ marginLeft: '10px', padding: '5px' }} />
-                </label>
-                <label>
-                    Rust, Dent, or Damage Notes:
-                    <textarea name="rustDentOrDamageNotes" maxLength={1000} style={{ marginLeft: '10px', padding: '5px', width: '200px', height: '100px' }} placeholder="Detail any noted damages..." />
-                </label>
-                <label>
-                    Engine Oil Condition:
-                    <select name="engineOilCondition" required style={{ marginLeft: '10px', padding: '5px', width: '210px' }}>
+                    Brake Fluid Level:
+                    <select name="brakeFluidLevel" required style={{ marginLeft: '10px', padding: '5px', width: '210px' }}>
                         <option value="Good">Good</option>
-                        <option value="Bad">Bad</option>
+                        <option value="Ok">Ok</option>
+                        <option value="Low">Low</option>
                     </select>
                 </label>
                 <label>
-                    Engine Oil Color:
-                    <select name="engineOilColor" required style={{ marginLeft: '10px', padding: '5px', width: '210px' }}>
-                        <option value="Clean">Clean</option>
-                        <option value="Brown">Brown</option>
-                        <option value="Black">Black</option>
-                    </select>
-                </label>
-                <label>
-                    Brake Fluid Condition:
-                    <select name="brakeFluidCondition" required style={{ marginLeft: '10px', padding: '5px', width: '210px' }}>
+                    Brake Condition - Front:
+                    <select name="brakeConditionFront" required style={{ marginLeft: '10px', padding: '5px', width: '210px' }}>
                         <option value="Good">Good</option>
-                        <option value="Bad">Bad</option>
+                        <option value="Ok">Ok</option>
+                        <option value="Needs Replacement">Needs Replacement</option>
                     </select>
                 </label>
                 <label>
-                    Brake Fluid Color:
-                    <select name="brakeFluidColor" required style={{ marginLeft: '10px', padding: '5px', width: '210px' }}>
-                        <option value="Clean">Clean</option>
-                        <option value="Brown">Brown</option>
-                        <option value="Black">Black</option>
+                    Brake Condition - Rear:
+                    <select name="brakeConditionRear" required style={{ marginLeft: '10px', padding: '5px', width: '210px' }}>
+                        <option value="Good">Good</option>
+                        <option value="Ok">Ok</option>
+                        <option value="Needs Replacement">Needs Replacement</option>
                     </select>
                 </label>
                 <label>
-                    Oil Leak in Engine:
-                    <input type="checkbox" name="oilLeakInEngine" required style={{ marginLeft: '10px', padding: '5px' }} />
+                    Emergency Brake Condition:
+                    <select name="emergencyBrakeCondition" required style={{ marginLeft: '10px', padding: '5px', width: '210px' }}>
+                        <option value="Good">Good</option>
+                        <option value="Ok">Ok</option>
+                        <option value="Low">Low</option>
+                    </select>
                 </label>
                 <label>
-                    Engine Overall Summary:
-                    <textarea name="engineOverallSummary" maxLength={1000} style={{ marginLeft: '10px', padding: '5px', width: '200px', height: '100px' }} placeholder="Provide overall summary..." />
+                    Brake Overall Summary:
+                    <textarea name="brakeOverallSummary" maxLength={1000} style={{ marginLeft: '10px', padding: '5px', width: '200px', height: '100px' }} placeholder="Provide overall summary..." />
                 </label>
                 <label>
                     Attach Images:
@@ -116,4 +106,4 @@ function FillEngineReport() {
     );
 }
 
-export default FillEngineReport;
+export default FillBrakeReport;
