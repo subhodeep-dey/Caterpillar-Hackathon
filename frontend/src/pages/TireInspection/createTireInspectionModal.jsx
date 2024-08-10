@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./CreateTireInspectionModal.css";
+import "./createTireInspectionModal.css";
 
 function CreateTireInspectionModal({ isOpen, onClose, onCreate }) {
   const [inspectionName, setInspectionName] = useState("");

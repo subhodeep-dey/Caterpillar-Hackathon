@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./CreateReportModal.css";
+import "./createReportModal.css";
 
 function CreateReportModal({ isOpen, onClose, onCreate }) {
   const [reportName, setReportName] = useState("");
