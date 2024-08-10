@@ -12,6 +12,7 @@ const brakeInspectionRoutes = require('../src/routes/brakeInspection.routes.js')
 const engineInspectionRoutes = require('../src/routes/engineInspection.routes.js');
 const voiceOfCustomerRoutes = require('../src/routes/voiceOfCustomer.routes.js');
 const inspectionImagesRoutes = require('../src/routes/inspectionImages.routes.js');
+const analyseSpeechRoutes = require('../src/routes/analyseSpeech.routes.js');
 
 
 const setRoutes = (app) => {
@@ -30,6 +31,7 @@ const setRoutes = (app) => {
   router.use('/engine-inspections', engineInspectionRoutes);
   router.use('/voice-of-customer', voiceOfCustomerRoutes);
   router.use('/inspection-images', inspectionImagesRoutes);
+  router.use('/analyse-speech', analyseSpeechRoutes);
 
   app.use(router);
 };

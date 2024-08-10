@@ -13,8 +13,21 @@ exports.create = (req, res) => {
     const vehicle = new Vehicle({
         serialNumber: req.body.serialNumber,
         model: req.body.model,
-        // Add other fields if required
+        inspectionId: req.body.inspectionId,
+        inspectorName: req.body.inspectorName,
+        inspectionEmployeeId: req.body.inspectionEmployeeId,
+        dateTimeOfInspection: req.body.dateTimeOfInspection,
+        locationOfInspection: req.body.locationOfInspection,
+        geoCoordinates: {
+            latitude: req.body.geoCoordinates.latitude,
+            longitude: req.body.geoCoordinates.longitude
+        },
+        serviceMeterHours: req.body.serviceMeterHours,
+        inspectorSignature: req.body.inspectorSignature,
+        customerName: req.body.customerName,
+        catCustomerID: req.body.catCustomerID 
     });
+    
 
     // Save Vehicle in the database
     vehicle.save()

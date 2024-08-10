@@ -1,0 +1,44 @@
+VEHICLE
+
+http://localhost:3000/vehicle
+POST
+{
+    "serialNumber": "7301234",
+    "model": "730",
+    "inspectionId": "12345",
+    "inspectorName": "John Doe",
+    "inspectionEmployeeId": "EMP001",
+    "dateTimeOfInspection": "2024-08-10T10:00:00Z",
+    "locationOfInspection": "Warehouse A",
+    "geoCoordinates": {
+        "latitude": 37.5665,
+        "longitude": 126.978
+    },
+    "serviceMeterHours": 1200,
+    "inspectorSignature": "signature.png",
+    "customerName": "ACME Corp", 
+    "catCustomerID": "CAT001"  
+}
+
+http://localhost:3000/vehicle
+GET
+
+http://localhost:3000/vehicle/:7301234
+PUT
+{
+    "serialNumber": "730EJ73245",
+    "model": "730 EJ",
+    "inspectionId": 12346,
+    "inspectorName": "Jane Smith",
+    "inspectionEmployeeId": "EMP002",
+    "dateTimeOfInspection": "2024-08-11T12:00:00Z",
+    "locationOfInspection": "Site B",
+    "geoCoordinates": {
+        "latitude": 35.6895,
+        "longitude": 139.6917
+    },
+    "serviceMeterHours": 1500,
+    "inspectorSignature": "signature_updated.png",
+    "customerName": "XYZ Ltd.",
+    "catCustomerID": "CAT002"
+}
