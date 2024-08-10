@@ -7,6 +7,7 @@ import sidebar_menu from './constants/sidebar-menu';
 import './App.css';
 import Reports from './pages/Reports';
 import FillReport from './pages/Reports/FillReport';
+import TireInspection from './pages/TireInspection';
 
 function App () {
   return(
@@ -19,9 +20,9 @@ function App () {
                   <Route path="*" element={<div></div>} />
                   <Route exact path="/" element={<div></div>} />
                   <Route exact path="/reports" element={< Reports/>} />
-                  <Route exact path="/locations" element={<div></div>} />
+                  <Route exact path="/tire-inspection" element={< TireInspection/>} />
                   <Route exact path="/fillreport" element={<FillReport />} />
-                  <Route exact path="/profile" element={<div></div>} />
+                  
               </Routes>
           </div>
       </div>

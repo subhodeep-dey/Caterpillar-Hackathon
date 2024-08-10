@@ -18,6 +18,9 @@ function SideBar({ menu }) {
         setActive(element.id);
       }
     });
+    if (location.pathname.includes("/fillreport")) {
+      setActive(2);
+    }
   }, [location.pathname]);
 
   const __navigate = (id) => {

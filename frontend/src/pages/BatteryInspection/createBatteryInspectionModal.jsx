@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./CreateReportModal.css";
+import "./createBatteryInspectionModal.css";
 
-function CreateReportModal({ isOpen, onClose, onCreate }) {
+function createBatteryInspectionModal({ isOpen, onClose, onCreate }) {
   const [reportName, setReportName] = useState("");
   const navigate = useNavigate();
 
@@ -34,4 +34,4 @@ function CreateReportModal({ isOpen, onClose, onCreate }) {
   );
 }
 
-export default CreateReportModal;
+export default createBatteryInspectionModal;

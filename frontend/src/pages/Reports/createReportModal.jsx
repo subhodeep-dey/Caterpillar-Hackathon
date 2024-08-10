@@ -23,7 +23,7 @@ function CreateReportModal({ isOpen, onClose, onCreate }) {
           onClick={() => {
             onCreate(reportName);
             onClose();
-            navigate("/fillreport");
+            navigate("/fillreport", { state: { reportName } });
           }}
         >
           Create Report

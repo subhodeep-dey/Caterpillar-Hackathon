@@ -1,90 +1,82 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import DashboardHeader from '../../components/DashboardHeader';
-import CreateReportModal from './createReportModal';
-import all_orders from '../../constants/orders';
-import {calculateRange, sliceData} from '../../utils/table-pagination';
+import CreateTireInspectionModal from './createTireInspectionModal';
+import { calculateRange, sliceData } from '../../utils/table-pagination';
 import '../styles.css';
-import DoneIcon from '../../assets/icons/done.svg';
-import CancelIcon from '../../assets/icons/cancel.svg';
-import RefundedIcon from '../../assets/icons/refunded.svg';
 
-function Orders () {
+function TireInspection() {
     const [search, setSearch] = useState('');
-    const [orders, setOrders] = useState(all_orders);
+    const [tireInspections, setTireInspections] = useState([]); // Initialize empty state
     const [page, setPage] = useState(1);
     const [pagination, setPagination] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
-        setPagination(calculateRange(all_orders, 5));
-        setOrders(sliceData(all_orders, page, 5));
+        // Fetch initial data or set dummy data
+        const dummyData = []; // Add your initial data here
+        setPagination(calculateRange(dummyData, 5));
+        setTireInspections(sliceData(dummyData, page, 5));
     }, []);
 
-    const handleNewOrder = (orderName) => {
-        if (orderName) {
-            const newOrder = {
-                id: orders.length + 1,
+    const handleNewInspection = (inspectionName) => {
+        if (inspectionName) {
+            const newInspection = {
+                id: tireInspections.length + 1,
                 asset: "XYZ",
                 date: new Date().toLocaleDateString(),
-                name: orderName,
-                status: 'Pending',
-                price: '0.00',
-                avatar: 'path/to/default/avatar.jpg'
+                name: inspectionName,
+                condition: 'Pending',
             };
-            setOrders([...orders, newOrder]);
+            setTireInspections([...tireInspections, newInspection]);
             setPage(1);
-            setPagination(calculateRange([...orders, newOrder], 5));
+            setPagination(calculateRange([...tireInspections, newInspection], 5));
         }
     };
 
     const __handleSearch = (event) => {
         setSearch(event.target.value);
         if (event.target.value !== '') {
-            let search_results = orders.filter((item) =>
-                item.first_name.toLowerCase().includes(search.toLowerCase()) ||
-                item.last_name.toLowerCase().includes(search.toLowerCase()) ||
-                item.product.toLowerCase().includes(search.toLowerCase())
+            let search_results = tireInspections.filter((item) =>
+                item.name.toLowerCase().includes(search.toLowerCase())
             );
-            setOrders(search_results);
-        }
-        else {
+            setTireInspections(search_results);
+        } else {
             __handleChangePage(1);
         }
     };
 
     const __handleChangePage = (new_page) => {
         setPage(new_page);
-        setOrders(sliceData(all_orders, new_page, 5));
-    }
+        setTireInspections(sliceData(tireInspections, new_page, 5));
+    };
 
-    const handleView = (orderId) => {
+    const handleView = (inspectionId) => {
         // Implement view logic here
-        console.log(`View order ${orderId}`);
+        console.log(`View inspection ${inspectionId}`);
     };
 
-    const handleDelete = (orderId) => {
-        // Implement delete logic here
-        setOrders(orders.filter(order => order.id !== orderId));
-        setPagination(calculateRange(orders.filter(order => order.id !== orderId), 5));
+    const handleDelete = (inspectionId) => {
+        setTireInspections(tireInspections.filter(inspection => inspection.id !== inspectionId));
+        setPagination(calculateRange(tireInspections.filter(inspection => inspection.id !== inspectionId), 5));
     };
 
-    return(
+    return (
         <div className='dashboard-content'>
             <DashboardHeader
                 onClick={() => setIsModalOpen(true)}
-                btnText="New Report" />
+                btnText="New Tire Inspection" />
 
-            <CreateReportModal
+            <CreateTireInspectionModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-                onCreate={handleNewOrder}
+                onCreate={handleNewInspection}
             />
 
             <div className='dashboard-content-container'>
                 <div className='dashboard-content-header'>
-                    <h2>Report List</h2>
+                    <h2>Tire Inspection List</h2>
                     <div className='dashboard-content-search'>
-                        <input      
+                        <input
                             type='text'
                             value={search}
                             placeholder='Search..'
@@ -95,76 +87,58 @@ function Orders () {
 
                 <table>
                     <thead>
-                        <th>ID</th>
-                        <th>ASSET</th>
-                        <th>REPORT NAME</th>
-                        <th>CONDITION</th>
-                        <th>DATE</th>
-                        <th>ACTION</th>
+                        <tr>
+                            <th>ID</th>
+                            <th>ASSET</th>
+                            <th>INSPECTION NAME</th>
+                            <th>CONDITION</th>
+                            <th>DATE</th>
+                            <th>ACTION</th>
+                        </tr>
                     </thead>
 
-                    {orders.length !== 0 ?
+                    {tireInspections.length !== 0 ?
                         <tbody>
-                            {orders.map((order, index) => (
+                            {tireInspections.map((inspection, index) => (
                                 <tr key={index}>
-                                    <td><span>{order.id}</span></td>
-                                    <td><span>{order.asset}</span></td>
+                                    <td><span>{inspection.id}</span></td>
+                                    <td><span>{inspection.asset}</span></td>
                                     <td>
                                         <div>
-                                            <span>{order.name}</span>
+                                            <span>{inspection.name}</span>
                                         </div>
                                     </td>
+                                    <td><span>{inspection.condition}</span></td>
+                                    <td><span>{inspection.date}</span></td>
                                     <td>
-                                        <div>
-                                            {order.status === 'Paid' ?
-                                                <img
-                                                    src={DoneIcon}
-                                                    alt='paid-icon'
-                                                    className='dashboard-content-icon' />
-                                            : order.status === 'Canceled' ?
-                                                <img
-                                                    src={CancelIcon}
-                                                    alt='canceled-icon'
-                                                    className='dashboard-content-icon' />
-                                            : order.status === 'Refunded' ?
-                                                <img
-                                                    src={RefundedIcon}
-                                                    alt='refunded-icon'
-                                                    className='dashboard-content-icon' />
-                                            : null}
-                                            <span>{order.status}</span>
-                                        </div>
-                                    </td>
-                                    <td><span>{order.date}</span></td>
-                                    <td>
-                                        <button onClick={() => handleView(order.id)}>View</button>
-                                        <button onClick={() => handleDelete(order.id)}>Delete</button>
+                                        <button onClick={() => handleView(inspection.id)}>View</button>
+                                        <button onClick={() => handleDelete(inspection.id)}>Delete</button>
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
-                    : null}
+                        : null}
                 </table>
 
-                {orders.length !== 0 ?
+                {tireInspections.length !== 0 ?
                     <div className='dashboard-content-footer'>
                         {pagination.map((item, index) => (
-                            <span 
-                                key={index} 
+                            <span
+                                key={index}
                                 className={item === page ? 'active-pagination' : 'pagination'}
                                 onClick={() => __handleChangePage(item)}>
-                                    {item}
+                                {item}
                             </span>
                         ))}
                     </div>
-                : 
+                    :
                     <div className='dashboard-content-footer'>
                         <span className='empty-table'>No data</span>
                     </div>
                 }
             </div>
         </div>
-    )
+    );
 }
 
-export default Orders;
+export default TireInspection;
