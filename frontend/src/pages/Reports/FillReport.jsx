@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import "./FillReport.css";
 
 function FillReport() {
     const location = useLocation();
@@ -46,39 +47,47 @@ function FillReport() {
 
 
     return (
-        <div>
+        <div className="container">
+            <button className="discard-button" onClick={discardReport}>Discard Report</button>
             <h1>Enter Analysis Report for {reportName && <>{reportName}</>}</h1>
-            <button onClick={discardReport} style={{ marginLeft: 'auto' }}>Discard Report</button>
             <p>Press "Start Dictation" to begin recording. Speak into your microphone, and the text will appear below.</p>
-            <button onClick={startDictation}>Start Dictation</button>
-            <button onClick={stopDictation}>Stop Dictation</button>
+            <div className="button-row">
+                <button onClick={startDictation}>Start Dictation</button>
+                <button onClick={stopDictation}>Stop Dictation</button>
+            </div>
             <textarea id="inputField" placeholder="Your speech will appear here..." value={transcript} readOnly style={{ width: '100%', height: '100px', padding: '10px', marginTop: '10px', fontSize: '16px' }}></textarea>
             <h2>Manual Entry</h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px' }}>
+            <div className="form-row">
                 <label>
                     ASSET:
-                    <input type="text" name="asset" style={{ marginLeft: '10px', padding: '5px', width: '200px' }} />
+                    <input type="text" name="asset" style={{ padding: '5px', width: '100%' }} />
                 </label>
                 <label>
                     REPORT NAME:
-                    <input type="text" name="reportName" style={{ marginLeft: '10px', padding: '5px', width: '200px' }} />
+                    <input type="text" name="reportName" style={{ padding: '5px', width: '100%' }} />
                 </label>
+            </div>
+            <div className="form-row">
                 <label>
                     CONDITION:
-                    <input type="text" name="condition" style={{ marginLeft: '10px', padding: '5px', width: '200px' }} />
+                    <input type="text" name="condition" style={{ padding: '5px', width: '100%' }} />
                 </label>
                 <label>
                     DATE:
-                    <input type="date" name="date" style={{ marginLeft: '10px', padding: '5px', width: '200px' }} />
+                    <input type="date" name="date" style={{ padding: '5px', width: '100%' }} />
                 </label>
+            </div>
+            <div className="form-row">
                 <label>
                     ACTION:
-                    <input type="text" name="action" style={{ marginLeft: '10px', padding: '5px', width: '200px' }} />
+                    <input type="text" name="action" style={{ padding: '5px', width: '100%' }} />
                 </label>
-                </div>
-            <button onClick={generateReport} style={{ marginTop: '20px', padding: '10px', fontSize: '16px' }}>Generate Report</button>
+            </div>
+            <button className="generate-report" onClick={generateReport}>Generate Report</button>
         </div>
     );
+    
+      
 }
 
 export default FillReport;
