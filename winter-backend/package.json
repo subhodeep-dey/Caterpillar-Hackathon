@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha tests/*.js --exit",
-    "start": "nodemon --exec babel-node index.js"
+    "start": "nodemon --exec babel-node index.js",
+    "vercel-build": "echo subhodeep-dey | winter-backend"
   },
   "repository": {
     "type": "git",
