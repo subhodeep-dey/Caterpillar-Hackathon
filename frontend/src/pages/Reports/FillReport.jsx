@@ -44,7 +44,10 @@ function FillReport() {
         // Implement report generation logic here
         alert('Report generated!');
     };
-
+    const handleChange = (event) => {
+        // Update the state with the new value
+        setTranscript(event.target.value);
+    };
 
     return (
         <div className="container">
@@ -55,7 +58,7 @@ function FillReport() {
                 <button onClick={startDictation}>Start Dictation</button>
                 <button onClick={stopDictation}>Stop Dictation</button>
             </div>
-            <textarea id="inputField" placeholder="Your speech will appear here..." value={transcript} readOnly style={{ width: '100%', height: '100px', padding: '10px', marginTop: '10px', fontSize: '16px' }}></textarea>
+            <textarea id="inputField" placeholder="Your speech will appear here..." value={transcript} onChange={handleChange} style={{ width: '100%', height: '100px', padding: '10px', marginTop: '10px', fontSize: '16px' }}></textarea>
             <h2>Manual Entry</h2>
             <div className="form-row">
                 <label>

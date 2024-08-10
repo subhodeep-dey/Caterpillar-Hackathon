@@ -90,7 +90,7 @@ function FillEngineReport() {
             <p>Press "Start Dictation" to begin recording. Speak into your microphone, and the text will appear below.</p>
             <button onClick={startDictation}>Start Dictation</button>
             <button onClick={stopDictation}>Stop Dictation</button>
-            <textarea id="inputField" placeholder="Your speech will appear here..." value={transcript} readOnly style={{ width: '100%', height: '100px', padding: '10px', marginTop: '10px', fontSize: '16px' }}></textarea>
+            <textarea id="inputField" placeholder="Your speech will appear here..." value={transcript}  style={{ width: '100%', height: '100px', padding: '10px', marginTop: '10px', fontSize: '16px' }}></textarea>
             <h2>Manual Entry</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px' }}>
                 <label>
