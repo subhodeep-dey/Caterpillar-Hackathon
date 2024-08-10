@@ -19,6 +19,7 @@ function App () {
                   <Route exact path="/" element={<div></div>} />
                   <Route exact path="/orders" element={< Orders/>} />
                   <Route exact path="/locations" element={<div></div>} />
+                  {/* <Route path="/fillreport" element={<FillReport />} /> */}
                   <Route exact path="/profile" element={<div></div>} />
               </Routes>
           </div>

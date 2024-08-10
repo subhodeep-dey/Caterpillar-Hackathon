@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import DashboardHeader from '../../components/DashboardHeader';
-
+import CreateReportModal from './createReportModal';
 import all_orders from '../../constants/orders';
 import {calculateRange, sliceData} from '../../utils/table-pagination';
-
 import '../styles.css';
 import DoneIcon from '../../assets/icons/done.svg';
 import CancelIcon from '../../assets/icons/cancel.svg';
@@ -14,11 +13,30 @@ function Orders () {
     const [orders, setOrders] = useState(all_orders);
     const [page, setPage] = useState(1);
     const [pagination, setPagination] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         setPagination(calculateRange(all_orders, 5));
         setOrders(sliceData(all_orders, page, 5));
     }, []);
+
+    const handleNewOrder = () => {
+        const orderName = prompt("Please enter the new order name:");
+        if (orderName) {
+            const newOrder = {
+                id: orders.length + 1, // simplistic approach for new ID
+                asset: "XYZ",
+                date: new Date().toLocaleDateString(),
+                name: orderName,
+                status: 'Pending',
+                price: '0.00',
+                avatar: 'path/to/default/avatar.jpg' // Default or placeholder image path
+            };
+            setOrders([...orders, newOrder]);
+            setPage(1);
+            setPagination(calculateRange([...orders, newOrder], 5));
+        }
+    };
 
     // Search
     const __handleSearch = (event) => {
@@ -45,13 +63,20 @@ function Orders () {
     return(
         <div className='dashboard-content'>
             <DashboardHeader
-                btnText="New Order" />
+                onClick={() => setIsModalOpen(true)}
+                btnText="New Report" />
+
+            <CreateReportModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onCreate={handleNewOrder}
+            />
 
             <div className='dashboard-content-container'>
                 <div className='dashboard-content-header'>
-                    <h2>Orders List</h2>
+                    <h2>Report List</h2>
                     <div className='dashboard-content-search'>
-                        <input
+                        <input      
                             type='text'
                             value={search}
                             placeholder='Search..'
@@ -63,11 +88,11 @@ function Orders () {
                 <table>
                     <thead>
                         <th>ID</th>
+                        <th>ASSET</th>
+                        <th>REPORT NAME</th>
+                        <th>CONDITION</th>
                         <th>DATE</th>
-                        <th>STATUS</th>
-                        <th>COSTUMER</th>
-                        <th>PRODUCT</th>
-                        <th>REVENUE</th>
+                        <th>ACTION</th>
                     </thead>
 
                     {orders.length !== 0 ?
@@ -75,7 +100,16 @@ function Orders () {
                             {orders.map((order, index) => (
                                 <tr key={index}>
                                     <td><span>{order.id}</span></td>
-                                    <td><span>{order.date}</span></td>
+                                    <td><span>{order.asset}</span></td>
+                                    <td>
+                                        <div>
+                                            {/* <img 
+                                                src={order.name}
+                                                className='dashboard-content-avatar'
+                                                alt={order.first_name + ' ' +order.last_name} /> */}
+                                            <span>{order.name}</span>
+                                        </div>
+                                    </td>
                                     <td>
                                         <div>
                                             {order.status === 'Paid' ?
@@ -97,17 +131,8 @@ function Orders () {
                                             <span>{order.status}</span>
                                         </div>
                                     </td>
-                                    <td>
-                                        <div>
-                                            <img 
-                                                src={order.avatar}
-                                                className='dashboard-content-avatar'
-                                                alt={order.first_name + ' ' +order.last_name} />
-                                            <span>{order.first_name} {order.last_name}</span>
-                                        </div>
-                                    </td>
-                                    <td><span>{order.product}</span></td>
-                                    <td><span>${order.price}</span></td>
+                                    <td><span>{order.date}</span></td>
+                                    <td><span>${order.action}</span></td>
                                 </tr>
                             ))}
                         </tbody>
