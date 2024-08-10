@@ -5,8 +5,8 @@ import SideBar from './components/Sidebar';
 import sidebar_menu from './constants/sidebar-menu';
 
 import './App.css';
-import Orders from './pages/Orders';
-import FillReport from './pages/Orders/FillReport';
+import Reports from './pages/Reports';
+import FillReport from './pages/Reports/FillReport';
 
 function App () {
   return(
@@ -18,7 +18,7 @@ function App () {
               <Routes>
                   <Route path="*" element={<div></div>} />
                   <Route exact path="/" element={<div></div>} />
-                  <Route exact path="/orders" element={< Orders/>} />
+                  <Route exact path="/reports" element={< Reports/>} />
                   <Route exact path="/locations" element={<div></div>} />
                   <Route exact path="/fillreport" element={<FillReport />} />
                   <Route exact path="/profile" element={<div></div>} />

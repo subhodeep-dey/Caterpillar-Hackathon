@@ -23,8 +23,8 @@
   justify-content: space-between;
 }
 .sidebar-items {
-  height: 100%;
-  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 .sidebar-item {
   padding: 1.5em;

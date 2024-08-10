@@ -21,16 +21,15 @@ function Orders () {
     }, []);
 
     const handleNewOrder = (orderName) => {
-        // const orderName = prompt("Please enter the new order name:");
         if (orderName) {
             const newOrder = {
-                id: orders.length + 1, // simplistic approach for new ID
+                id: orders.length + 1,
                 asset: "XYZ",
                 date: new Date().toLocaleDateString(),
                 name: orderName,
                 status: 'Pending',
                 price: '0.00',
-                avatar: 'path/to/default/avatar.jpg' // Default or placeholder image path
+                avatar: 'path/to/default/avatar.jpg'
             };
             setOrders([...orders, newOrder]);
             setPage(1);
@@ -38,7 +37,6 @@ function Orders () {
         }
     };
 
-    // Search
     const __handleSearch = (event) => {
         setSearch(event.target.value);
         if (event.target.value !== '') {
@@ -54,11 +52,21 @@ function Orders () {
         }
     };
 
-    // Change Page 
     const __handleChangePage = (new_page) => {
         setPage(new_page);
         setOrders(sliceData(all_orders, new_page, 5));
     }
+
+    const handleView = (orderId) => {
+        // Implement view logic here
+        console.log(`View order ${orderId}`);
+    };
+
+    const handleDelete = (orderId) => {
+        // Implement delete logic here
+        setOrders(orders.filter(order => order.id !== orderId));
+        setPagination(calculateRange(orders.filter(order => order.id !== orderId), 5));
+    };
 
     return(
         <div className='dashboard-content'>
@@ -103,10 +111,6 @@ function Orders () {
                                     <td><span>{order.asset}</span></td>
                                     <td>
                                         <div>
-                                            {/* <img 
-                                                src={order.name}
-                                                className='dashboard-content-avatar'
-                                                alt={order.first_name + ' ' +order.last_name} /> */}
                                             <span>{order.name}</span>
                                         </div>
                                     </td>
@@ -132,7 +136,10 @@ function Orders () {
                                         </div>
                                     </td>
                                     <td><span>{order.date}</span></td>
-                                    <td><span>${order.action}</span></td>
+                                    <td>
+                                        <button onClick={() => handleView(order.id)}>View</button>
+                                        <button onClick={() => handleDelete(order.id)}>Delete</button>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>

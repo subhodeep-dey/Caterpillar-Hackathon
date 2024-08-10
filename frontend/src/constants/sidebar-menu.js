@@ -12,21 +12,45 @@ const sidebar_menu = [
     },
     {
         id: 2,
-        icon: ProductIcon,
-        path: '/orders',
-        title: 'Orders',
+        icon: DashboardIcon,
+        path: '/vehicle',
+        title: 'Vehicle',
     },
     {
         id: 3,
-        icon: ShippingIcon,
-        path: '/products',
-        title: 'Products',
+        icon: ProductIcon,
+        path: '/reports',
+        title: 'Reports',
     },
     {
         id: 4,
+        icon: ShippingIcon,
+        path: '/tire-inspection',
+        title: 'Tire Inspection',
+    },
+    {
+        id: 5,
         icon: UserIcon,
-        path: '/profile',
-        title: 'My account',
+        path: '/battery-inspection',
+        title: 'Battery Inspection',
+    },
+    {
+        id: 6,
+        icon: UserIcon,
+        path: '/exterior-inspection',
+        title: 'Exterior Inspection',
+    },
+    {
+        id: 7,
+        icon: UserIcon,
+        path: '/brake-inspection',
+        title: 'Brake Inspection',
+    },
+    {
+        id: 8,
+        icon: UserIcon,
+        path: '/engine-inspection',
+        title: 'Engine Inspection',
     }
 ]
 
