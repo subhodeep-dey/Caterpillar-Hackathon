@@ -14,7 +14,7 @@ function SummaryForm() {
     event.preventDefault();
 
     try {
-      const response = await fetch('https://your-backend-endpoint.com/submit', {
+      const response = await fetch('', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

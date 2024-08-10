@@ -9,7 +9,7 @@ function ChatBot() {
   const [input, setInput] = useState('');
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [questionnaire, setQuestionnaire] = useState([
-    { question: "Enter the truck serial number (e.g., 7301234, 730EJ73245, 73592849, 735EJBC9723):", field: "Truck Serial Number", answer: "" },
+    { question: "Enter the truck serial number ", field: "Truck Serial Number", answer: "" },
     { question: "Enter the truck model (e.g., 730, 730 EJ, 735, 745):", field: "Truck Model", answer: "" },
     { question: "Enter the inspector name:", field: "Inspector Name", answer: "" },
     { question: "Enter the inspection employee ID:", field: "Inspection Employee ID", answer: "" },
