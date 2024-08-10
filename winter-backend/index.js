@@ -1,23 +1,25 @@
-require( 'dotenv' ).config();
-// Initialize DB Connection
-require( './config/database.js' );
+require('dotenv').config();
+require('./config/database.js');
 
-const config = require( './config/config.js' ).getConfig(),
-    PORT = config.PORT;
+const config = require('./config/config.js').getConfig();
+const PORT = config.PORT || 3000;
 
-console.log( '✔ Winter-Backend' );
-console.log( `✔ Mode: ${config.MODE}` );
-console.log( `✔ Port: ${PORT}` );
+console.log('✔ Winter-Backend');
+console.log(`✔ Mode: ${config.MODE}`);
+console.log(`✔ Port: ${PORT}`);
 
-const { server } = require( './config/server.js' );
+const { server } = require('./config/server.js');
 
-server.listen( PORT ).on( 'error', ( err ) => {
-    console.log( '✘ Application failed to start' );
-    console.error( '✘', err.message );
-    process.exit( 0 );
-} ).on( 'listening', () => {
-    console.log( '✔ Application Started' );
-} );
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+  server.listen(PORT, () => {
+    console.log('✔ Application Started');
+  }).on('error', (err) => {
+    console.log('✘ Application failed to start');
+    console.error('✘', err.message);
+    process.exit(1);
+  });
+}
 
-
-module.exports = { server };
+// Export the Express app as a request handler function
+module.exports = server;
