@@ -1,4 +1,10 @@
-/* src/index.css */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+.dashboard-container {
+    display: flex;
+    flex-direction: row;
+}
+.dashboard-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #F0F2F5;
+}
