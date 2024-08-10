@@ -39,11 +39,49 @@ function FillEngineReport() {
     const discardReport = () => {
         navigate('/reports');
     };
-    const generateReport = () => {
-        // Implement report generation logic here
-        alert('Report generated!');
+    const generateReport = async () => {
+        try {
+            const inspectionID = document.querySelector('input[name="inspectionID"]').value;
+            const rustDentOrDamage = document.querySelector('input[name="rustDentOrDamage"]').checked ? 'Yes' : 'No';
+            const rustDentOrDamageNotes = document.querySelector('textarea[name="rustDentOrDamageNotes"]').value;
+            const engineOilCondition = document.querySelector('select[name="engineOilCondition"]').value;
+            const engineOilColor = document.querySelector('select[name="engineOilColor"]').value;
+            const brakeFluidCondition = document.querySelector('select[name="brakeFluidCondition"]').value;
+            const brakeFluidColor = document.querySelector('select[name="brakeFluidColor"]').value;
+            const oilLeakInEngine = document.querySelector('input[name="oilLeakInEngine"]').checked ? 'Yes' : 'No';
+            const engineOverallSummary = document.querySelector('textarea[name="engineOverallSummary"]').value;
+            const attachedImages = document.querySelector('input[name="attachedImages"]').files;
+    
+            const formData = new FormData();
+            formData.append('inspectionID', inspectionID);
+            formData.append('rustDentOrDamage', rustDentOrDamage);
+            formData.append('rustDentOrDamageNotes', rustDentOrDamageNotes);
+            formData.append('engineOilCondition', engineOilCondition);
+            formData.append('engineOilColor', engineOilColor);
+            formData.append('brakeFluidCondition', brakeFluidCondition);
+            formData.append('brakeFluidColor', brakeFluidColor);
+            formData.append('oilLeakInEngine', oilLeakInEngine);
+            formData.append('engineOverallSummary', engineOverallSummary);
+    
+            const response = await fetch('http://localhost:3000/engine-inspections', {
+                method: 'POST',
+                body: formData
+            });
+    
+            if (response.ok) {
+                alert('Report generated successfully!');
+                navigate('/engine-inspection');
+            } else {
+                const errorText = await response.text();
+                console.error('Failed to generate report:', response.status, errorText);
+                alert('Failed to generate report.');
+            }
+        } catch (error) {
+            console.error('Error generating report:', error);
+            alert('Error generating report.');
+        }
     };
-
+    
 
     return (
         <div>
