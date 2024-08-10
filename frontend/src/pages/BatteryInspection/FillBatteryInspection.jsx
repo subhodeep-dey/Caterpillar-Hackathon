@@ -39,10 +39,47 @@ function FillBatteryReport() {
     const discardReport = () => {
         navigate('/battery-inspection');
     };
-    const generateReport = () => {
-        // Implement report generation logic here
-        alert('Report generated!');
+    const generateReport = async () => {
+        try {
+            const inspectionID = document.querySelector('input[name="inspectionID"]').value;
+            const batteryMake = document.querySelector('input[name="batteryMake"]').value;
+            const batteryReplacementDate = document.querySelector('input[name="batteryReplacementDate"]').value;
+            const batteryVoltage = parseFloat(document.querySelector('input[name="batteryVoltage"]').value);
+            const batteryWaterLevel = document.querySelector('select[name="batteryWaterLevel"]').value;
+            const batteryCondition = document.querySelector('input[name="batteryCondition"]').checked ? 'Good' : 'Bad';
+            const batteryLeakOrRust = document.querySelector('input[name="batteryLeakOrRust"]').checked ? 'Yes' : 'No';
+            const batteryOverallSummary = document.querySelector('textarea[name="batteryOverallSummary"]').value;
+    
+            const formData = new FormData();
+            formData.append('inspectionID', inspectionID);
+            formData.append('batteryMake', batteryMake);
+            formData.append('batteryReplacementDate', batteryReplacementDate);
+            formData.append('batteryVoltage', batteryVoltage);
+            formData.append('batteryWaterLevel', batteryWaterLevel);
+            formData.append('batteryCondition', batteryCondition);
+            formData.append('batteryLeakOrRust', batteryLeakOrRust);
+            formData.append('batteryOverallSummary', batteryOverallSummary);
+
+    
+            const response = await fetch('http://localhost:3000/battery-inspections', {
+                method: 'POST',
+                body: formData
+            });
+    
+            if (response.ok) {
+                alert('Report generated successfully!');
+                navigate('/battery-inspection');
+            } else {
+                const errorText = await response.text();
+                console.error('Failed to generate report:', response.status, errorText);
+                alert('Failed to generate report.');
+            }
+        } catch (error) {
+            console.error('Error generating report:', error);
+            alert('Error generating report.');
+        }
     };
+    
 
 
     return (

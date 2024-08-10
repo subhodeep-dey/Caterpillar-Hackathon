@@ -60,7 +60,7 @@ function FillTyreReport() {
 
     const generateReport = async () => {
       try {
-          const inspectionID = "64d4a098ab987c12a45e6123"; // You might want to generate this dynamically or get it from somewhere
+          const inspectionID = crypto.randomUUID; // You might want to generate this dynamically or get it from somewhere
           const dataToSend = {
               inspectionID,
               tirePressureLeftFront: parseInt(formData.tirePressureLeftFront),
