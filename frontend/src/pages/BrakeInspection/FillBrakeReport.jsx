@@ -39,11 +39,45 @@ function FillBrakeReport() {
     const discardReport = () => {
         navigate('/reports');
     };
-    const generateReport = () => {
-        // Implement report generation logic here
-        alert('Report generated!');
-    };
+    const generateReport = async () => {
+        try {
+            const inspectionID = document.querySelector('input[name="inspectionID"]').value;
+            const brakeFluidLevel = document.querySelector('select[name="brakeFluidLevel"]').value;
+            const brakeConditionFront = document.querySelector('select[name="brakeConditionFront"]').value;
+            const brakeConditionRear = document.querySelector('select[name="brakeConditionRear"]').value;
+            const emergencyBrakeCondition = document.querySelector('select[name="emergencyBrakeCondition"]').value;
+            const brakeOverallSummary = document.querySelector('textarea[name="brakeOverallSummary"]').value;
+            const attachedImages = document.querySelector('input[name="attachedImages"]').files;
+    
+            const formData = new FormData();
+            formData.append('inspectionID', inspectionID);
+            formData.append('brakeFluidLevel', brakeFluidLevel);
+            formData.append('brakeConditionFront', brakeConditionFront);
+            formData.append('brakeConditionRear', brakeConditionRear);
+            formData.append('emergencyBrakeCondition', emergencyBrakeCondition);
+            formData.append('brakeOverallSummary', brakeOverallSummary);
+    
 
+    
+            const response = await fetch('http://localhost:3000/brake-inspections', {
+                method: 'POST',
+                body: formData
+            });
+    
+            if (response.ok) {
+                alert('Report generated successfully!');
+                navigate('/brake-inspection');
+            } else {
+                const errorText = await response.text();
+                console.error('Failed to generate report:', response.status, errorText);
+                alert('Failed to generate report.');
+            }
+        } catch (error) {
+            console.error('Error generating report:', error);
+            alert('Error generating report.');
+        }
+    };
+    
 
     return (
         <div>
