@@ -42,16 +42,18 @@ function FillReport() {
       recognition.stop();
     }
   };
+
   const discardReport = () => {
     navigate("/reports");
   };
+
   const generateReport = () => {
     // Implement report generation logic here
     alert("Report generated!");
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>Enter Analysis Report for {reportName && <>{reportName}</>}</h1>
       <button onClick={discardReport} style={{ marginLeft: "auto" }}>
         Discard Report
@@ -60,75 +62,40 @@ function FillReport() {
         Press "Start Dictation" to begin recording. Speak into your microphone,
         and the text will appear below.
       </p>
-      <button onClick={startDictation}>Start Dictation</button>
-      <button onClick={stopDictation}>Stop Dictation</button>
+      <div className="buttons-group">
+        <button onClick={startDictation}>Start Dictation</button>
+        <button onClick={stopDictation}>Stop Dictation</button>
+      </div>
       <textarea
         id="inputField"
         placeholder="Your speech will appear here..."
         value={transcript}
         readOnly
-        style={{
-          width: "100%",
-          height: "100px",
-          padding: "10px",
-          marginTop: "10px",
-          fontSize: "16px",
-        }}
       ></textarea>
       <h2>Manual Entry</h2>
-      <div
-      // style={{
-      //   display: "flex",
-      //   flexDirection: "column",
-      //   gap: "10px",
-      //   marginTop: "20px",
-      // }}
-      >
+      <div className="manual-entry">
         <label>
-          ASSET:
-          <input
-            type="text"
-            name="asset"
-            // style={{ marginLeft: "10px", padding: "5px", width: "200px" }}
-          />
+          <span>ASSET:</span>
+          <input type="text" name="asset" />
         </label>
         <label>
-          REPORT NAME:
-          <input
-            type="text"
-            name="reportName"
-            // style={{ marginLeft: "10px", padding: "5px", width: "200px" }}
-          />
+          <span>REPORT NAME:</span>
+          <input type="text" name="reportName" />
         </label>
         <label>
-          CONDITION:
-          <input
-            type="text"
-            name="condition"
-            // style={{ marginLeft: "10px", padding: "5px", width: "200px" }}
-          />
+          <span>CONDITION:</span>
+          <input type="text" name="condition" />
         </label>
         <label>
-          DATE:
-          <input
-            type="date"
-            name="date"
-            // style={{ marginLeft: "10px", padding: "5px", width: "200px" }}
-          />
+          <span>DATE:</span>
+          <input type="date" name="date" />
         </label>
         <label>
-          ACTION:
-          <input
-            type="text"
-            name="action"
-            // style={{ marginLeft: "10px", padding: "5px", width: "200px" }}
-          />
+          <span>ACTION:</span>
+          <input type="text" name="action" />
         </label>
       </div>
-      <button
-        onClick={generateReport}
-        style={{ marginTop: "20px", padding: "10px", fontSize: "16px" }}
-      >
+      <button className="generate-report" onClick={generateReport}>
         Generate Report
       </button>
     </div>
