@@ -39,10 +39,39 @@ function FillVehicleReport() {
     const discardReport = () => {
         navigate('/vehicle');
     };
-    const generateReport = () => {
-        // Implement report generation logic here
-        alert('Report generated!');
+    const generateReport = async () => {
+        try {
+            const serialNumber = document.querySelector('input[name="serialNumber"]').value;
+            const model = document.querySelector('input[name="model"]').value;
+            const customerName = document.querySelector('input[name="customerName"]').value;
+            const catCustomerID = document.querySelector('input[name="catCustomerID"]').value;
+    
+            const formData = new FormData();
+            formData.append('serialNumber', serialNumber);
+            formData.append('model', model);
+            formData.append('customerName', customerName);
+            formData.append('catCustomerID', catCustomerID);
+    
+            const response = await fetch('http://localhost:3000/vehicle-inspections', {
+                method: 'POST',
+                body: formData
+            });
+    
+            if (response.ok) {
+                alert('Report generated successfully!');
+                navigate('/vehicle-inspection');
+            } else {
+                const errorText = await response.text();
+                console.error('Failed to generate report:', response.status, errorText);
+                alert('Failed to generate report.');
+            }
+        } catch (error) {
+            console.error('Error generating report:', error);
+            alert('Error generating report.');
+        }
     };
+    
+    
 
 
     return (

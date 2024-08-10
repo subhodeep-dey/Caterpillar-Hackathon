@@ -39,10 +39,42 @@ function FillExteriorReport() {
     const discardReport = () => {
         navigate('/reports');
     };
-    const generateReport = () => {
-        // Implement report generation logic here
-        alert('Report generated!');
+    const generateReport = async () => {
+        try {
+            const inspectionID = document.querySelector('input[name="inspectionID"]').value;
+            const rustDentOrDamage = document.querySelector('input[name="rustDentOrDamage"]').checked ? 'Yes' : 'No';
+            const rustDentOrDamageNotes = document.querySelector('textarea[name="rustDentOrDamageNotes"]').value;
+            const oilLeakInSuspension = document.querySelector('input[name="oilLeakInSuspension"]').checked ? 'Yes' : 'No';
+            const exteriorOverallSummary = document.querySelector('textarea[name="exteriorOverallSummary"]').value;
+            const attachedImages = document.querySelector('input[name="attachedImages"]').files;
+    
+            const formData = new FormData();
+            formData.append('inspectionID', inspectionID);
+            formData.append('rustDentOrDamage', rustDentOrDamage);
+            formData.append('rustDentOrDamageNotes', rustDentOrDamageNotes);
+            formData.append('oilLeakInSuspension', oilLeakInSuspension);
+            formData.append('exteriorOverallSummary', exteriorOverallSummary);
+    
+            const response = await fetch('http://localhost:3000/exterior-inspections', {
+                method: 'POST',
+                body: formData
+            });
+    
+            if (response.ok) {
+                alert('Report generated successfully!');
+                navigate('/exterior-inspection');
+            } else {
+                const errorText = await response.text();
+                console.error('Failed to generate report:', response.status, errorText);
+                alert('Failed to generate report.');
+            }
+        } catch (error) {
+            console.error('Error generating report:', error);
+            alert('Error generating report.');
+        }
     };
+    
+    
 
 
     return (
