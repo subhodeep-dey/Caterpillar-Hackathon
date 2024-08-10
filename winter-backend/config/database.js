@@ -7,6 +7,7 @@ class Connection {
         const url = config.MONGO_URL;
 
         mongoose.Promise = global.Promise;
+
         this.connect( url ).then( () => {
             console.log( '✔ Database Connected' );
         } ).catch( ( err ) => {
