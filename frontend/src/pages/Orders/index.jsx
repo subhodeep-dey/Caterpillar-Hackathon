@@ -20,8 +20,8 @@ function Orders () {
         setOrders(sliceData(all_orders, page, 5));
     }, []);
 
-    const handleNewOrder = () => {
-        const orderName = prompt("Please enter the new order name:");
+    const handleNewOrder = (orderName) => {
+        // const orderName = prompt("Please enter the new order name:");
         if (orderName) {
             const newOrder = {
                 id: orders.length + 1, // simplistic approach for new ID
