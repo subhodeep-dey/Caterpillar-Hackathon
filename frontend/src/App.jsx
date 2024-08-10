@@ -1,22 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';  // Import useNavigate
-import './App.css'; 
+import './App.css'; // Add your custom CSS here
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationArrow, faMicrophone } from '@fortawesome/free-solid-svg-icons';
+
+function SummaryForm({ questionnaire }) {
+  return (
+    <div className="p-4">
+      <h2 className="text-lg font-semibold mb-4">Summary of Your Answers</h2>
+      <div className="space-y-4">
+        {questionnaire.map((item, index) => (
+          <div key={index} className="bg-gray-100 p-4 rounded-lg">
+            <p className="font-semibold">{item.field}:</p>
+            <p>{item.answer}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 function ChatBot() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [questionnaire, setQuestionnaire] = useState([
-    { question: "Enter the truck serial number ", field: "Truck Serial Number", answer: "" },
+    { question: "Enter the truck serial number (e.g., 7301234, 730EJ73245, 73592849, 735EJBC9723):", field: "Truck Serial Number", answer: "" },
     { question: "Enter the truck model (e.g., 730, 730 EJ, 735, 745):", field: "Truck Model", answer: "" },
     { question: "Enter the inspector name:", field: "Inspector Name", answer: "" },
     { question: "Enter the inspection employee ID:", field: "Inspection Employee ID", answer: "" },
     { question: "Enter the date and time of inspection:", field: "Date & Time of Inspection", answer: "" },
     // Add the remaining questions here...
   ]);
-  const navigate = useNavigate();  // Initialize useNavigate hook
+  const [isCompleted, setIsCompleted] = useState(false);
 
   useEffect(() => {
     const date = new Date();
@@ -31,7 +46,7 @@ function ChatBot() {
     };
 
     setMessages([firstQuestion]);
-  }, []);
+  }, [questionnaire]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -70,8 +85,9 @@ function ChatBot() {
       };
       setMessages((prevMessages) => [...prevMessages, botMessage]);
     } else {
-      // End of questionnaire, navigate to summary page
-      navigate('/summary', { state: { questionnaire: updatedQuestionnaire } });
+      // End of questionnaire
+      setIsCompleted(true);
+      console.log("Questionnaire completed:", updatedQuestionnaire);
     }
   };
 
@@ -105,53 +121,59 @@ function ChatBot() {
             </div>
           </div>
           <div id="messageFormeight" className="p-4 overflow-y-auto h-96 space-y-4">
-            {messages.map((message, index) => (
-              <div
-                key={index}
-                className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
+            {isCompleted ? (
+              <SummaryForm questionnaire={questionnaire} />
+            ) : (
+              messages.map((message, index) => (
                 <div
-                  className={`max-w-xs p-3 rounded-lg ${
-                    message.sender === 'user'
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-gray-200 text-gray-800'
-                  }`}
+                  key={index}
+                  className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
-                  <p>{message.text}</p>
+                  <div
+                    className={`max-w-xs p-3 rounded-lg ${
+                      message.sender === 'user'
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-gray-200 text-gray-800'
+                    }`}
+                  >
+                    <p>{message.text}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
-          <div className="bg-gray-100 p-4 rounded-b-lg">
-            <form id="messageArea" className="flex" onSubmit={handleSubmit}>
-              <input
-                type="text"
-                id="text"
-                name="msg"
-                placeholder="Type your answer..."
-                autoComplete="off"
-                className="w-full p-3 rounded-l-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                required
-              />
-              <button
-                type="button"
-                id="dictate"
-                className="bg-blue-500 text-white p-3 rounded-r-none hover:bg-blue-600"
-                onClick={startDictation}
-              >
-                <FontAwesomeIcon icon={faMicrophone} />
-              </button>
-              <button
-                type="submit"
-                id="send"
-                className="bg-blue-500 text-white p-3 rounded-r-lg hover:bg-blue-600"
-              >
-                <FontAwesomeIcon icon={faLocationArrow} />
-              </button>
-            </form>
-          </div>
+          {!isCompleted && (
+            <div className="bg-gray-100 p-4 rounded-b-lg">
+              <form id="messageArea" className="flex" onSubmit={handleSubmit}>
+                <input
+                  type="text"
+                  id="text"
+                  name="msg"
+                  placeholder="Type your answer..."
+                  autoComplete="off"
+                  className="w-full p-3 rounded-l-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  required
+                />
+                <button
+                  type="button"
+                  id="dictate"
+                  className="bg-blue-500 text-white p-3 rounded-r-none hover:bg-blue-600"
+                  onClick={startDictation}
+                >
+                  <FontAwesomeIcon icon={faMicrophone} />
+                </button>
+                <button
+                  type="submit"
+                  id="send"
+                  className="bg-blue-500 text-white p-3 rounded-r-lg hover:bg-blue-600"
+                >
+                  <FontAwesomeIcon icon={faLocationArrow} />
+                </button>
+              </form>
+            </div>
+          )}
         </div>
       </div>
     </div>
