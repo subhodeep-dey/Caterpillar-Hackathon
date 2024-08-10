@@ -5,14 +5,21 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha tests/*.js --exit",
-    "start": "nodemon --exec babel-node index.js"
+    "start": "nodemon --exec babel-node index.js",
+    "vercel-build": "vercel dev"
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:subhodeep-dey/Caterpillar-Hackathon.git"
   },
-  "keywords": [],
-  "author": "subhodeep-dey",
+  "engines": {
+    "node": "20.x"
+  },
+  "keywords": [
+    "vercel",
+    "serverless"
+  ],
+  "author": "subhodeep-dey <hello@subhodeepdey.com>",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.17.5",
