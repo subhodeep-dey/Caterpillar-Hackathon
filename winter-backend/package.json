@@ -45,6 +45,7 @@
     "slugify": "^1.3.5"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.16.0",
     "axios": "^1.7.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
