@@ -75,35 +75,67 @@ function FillVehicleReport() {
 
 
     return (
-        <div>
+        <div className="container">
             <h1>Enter Analysis Report for {reportName && <>{reportName}</>}</h1>
-            <button onClick={discardReport} style={{ marginLeft: 'auto' }}>Discard Report</button>
+            <button className="discard-button" onClick={discardReport}>Discard Report</button>
             <p>Press "Start Dictation" to begin recording. Speak into your microphone, and the text will appear below.</p>
-            <button onClick={startDictation}>Start Dictation</button>
-            <button onClick={stopDictation}>Stop Dictation</button>
-            <textarea id="inputField" placeholder="Your speech will appear here..." value={transcript}  style={{ width: '100%', height: '100px', padding: '10px', marginTop: '10px', fontSize: '16px' }}></textarea>
+            <div className="button-row">
+                <button onClick={startDictation}>Start Dictation</button>
+                <button onClick={stopDictation}>Stop Dictation</button>
+            </div>
+            <textarea
+                id="inputField"
+                placeholder="Your speech will appear here..."
+                value={transcript}
+                style={{ width: '100%', height: '100px', padding: '10px', marginTop: '10px', fontSize: '16px' }}
+            ></textarea>
             <h2>Manual Entry</h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px' }}>
+            <div className="form-row">
                 <label>
                     Serial Number:
-                    <input type="text" name="serialNumber" required style={{ marginLeft: '10px', padding: '5px', width: '200px' }} maxLength={50} />
+                    <input
+                        type="text"
+                        name="serialNumber"
+                        required
+                        style={{ padding: '5px', width: '100%' }}
+                        maxLength={50}
+                    />
                 </label>
                 <label>
                     Model:
-                    <input type="text" name="model" required style={{ marginLeft: '10px', padding: '5px', width: '200px' }} maxLength={50} />
+                    <input
+                        type="text"
+                        name="model"
+                        required
+                        style={{ padding: '5px', width: '100%' }}
+                        maxLength={50}
+                    />
                 </label>
                 <label>
                     Customer Name:
-                    <input type="text" name="customerName" required style={{ marginLeft: '10px', padding: '5px', width: '200px' }} maxLength={100} />
+                    <input
+                        type="text"
+                        name="customerName"
+                        required
+                        style={{ padding: '5px', width: '100%' }}
+                        maxLength={100}
+                    />
                 </label>
                 <label>
                     CAT Customer ID:
-                    <input type="text" name="catCustomerID" required style={{ marginLeft: '10px', padding: '5px', width: '200px' }} maxLength={50} />
+                    <input
+                        type="text"
+                        name="catCustomerID"
+                        required
+                        style={{ padding: '5px', width: '100%' }}
+                        maxLength={50}
+                    />
                 </label>
             </div>
 
-            <button onClick={generateReport} style={{ marginTop: '20px', padding: '10px', fontSize: '16px' }}>Generate Report</button>
+            <button className="generate-report" onClick={generateReport} style={{ padding: '10px', marginTop: '10px', fontSize: '16px' }}>Generate Report</button>
         </div>
+
     );
 }
 

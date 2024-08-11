@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import './FillBatteryInspection.css'
 
 function FillBatteryReport() {
     const location = useLocation();
@@ -83,59 +84,101 @@ function FillBatteryReport() {
 
 
     return (
-        <div>
+        <div className="container">
             <h1>Enter Analysis Report for {reportName && <>{reportName}</>}</h1>
-            <button onClick={discardReport} style={{ marginLeft: 'auto' }}>Discard Report</button>
+            <button className="discard-button" onClick={discardReport}>Discard Report</button>
             <p>Press "Start Dictation" to begin recording. Speak into your microphone, and the text will appear below.</p>
-            <button onClick={startDictation}>Start Dictation</button>
-            <button onClick={stopDictation}>Stop Dictation</button>
-            <textarea id="inputField" placeholder="Your speech will appear here..." value={transcript}  style={{ width: '100%', height: '100px', padding: '10px', marginTop: '10px', fontSize: '16px' }}></textarea>
+            <div className="button-row">
+                <button onClick={startDictation}>Start Dictation</button>
+                <button onClick={stopDictation}>Stop Dictation</button>
+            </div>
+            <textarea
+                id="inputField"
+                placeholder="Your speech will appear here..."
+                value={transcript}
+                style={{ width: '100%', height: '100px', padding: '10px', marginTop: '10px', fontSize: '16px' }}
+            ></textarea>
             <h2>Manual Entry</h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px' }}>
+            <div className="form-row">
                 <label>
                     Inspection ID:
-                    <input type="text" name="inspectionID" placeholder="Enter Inspection ID" required style={{ marginLeft: '10px', padding: '5px', width: '200px' }} />
+                    <input
+                        type="text"
+                        name="inspectionID"
+                        placeholder="Enter Inspection ID"
+                        required
+                        style={{ padding: '5px', width: '100%' }}
+                    />
                 </label>
                 <label>
                     Battery Make:
-                    <input type="text" name="batteryMake" required style={{ marginLeft: '10px', padding: '5px', width: '200px' }} maxLength={50} />
+                    <input
+                        type="text"
+                        name="batteryMake"
+                        required
+                        style={{ padding: '5px', width: '100%' }}
+                        maxLength={50}
+                    />
                 </label>
                 <label>
                     Battery Replacement Date:
-                    <input type="date" name="batteryReplacementDate" required style={{ marginLeft: '10px', padding: '5px', width: '200px' }} />
+                    <input
+                        type="date"
+                        name="batteryReplacementDate"
+                        required
+                        style={{ padding: '5px', width: '100%' }}
+                    />
                 </label>
                 <label>
                     Battery Voltage:
-                    <input type="number" name="batteryVoltage" required style={{ marginLeft: '10px', padding: '5px', width: '200px' }} />
+                    <input
+                        type="number"
+                        name="batteryVoltage"
+                        required
+                        style={{ padding: '5px', width: '100%' }}
+                    />
                 </label>
                 <label>
                     Battery Water Level:
-                    <select name="batteryWaterLevel" required style={{ marginLeft: '10px', padding: '5px', width: '210px' }}>
+                    <select
+                        name="batteryWaterLevel"
+                        required
+                        style={{ padding: '5px', width: '100%' }}
+                    >
                         <option value="Good">Good</option>
                         <option value="Ok">Ok</option>
                         <option value="Low">Low</option>
                     </select>
                 </label>
-                <label>
-                    Battery Condition (Good/Bad):
-                    <input type="checkbox" name="batteryCondition" required style={{ marginLeft: '10px' }} />
+                <label className="check-box" style={{ display: 'flex', flexDirection: 'row' , gap: '10px'}}>
+                    <p>Battery Condition (Check = Good):</p>
+                    <input type="checkbox" name="batteryCondition" required />
                 </label>
-                <label>
-                    Battery Leak or Rust (Yes/No):
-                    <input type="checkbox" name="batteryLeakOrRust" required style={{ marginLeft: '10px' }} />
+                <label className="check-box" style={{ display: 'flex', flexDirection: 'row' , gap: '10px'}}>
+                    <p>Battery Leak or Rust (Check = Yes):</p>
+                    <input type="checkbox" name="batteryLeakOrRust" required />
                 </label>
                 <label>
                     Battery Overall Summary:
-                    <textarea name="batteryOverallSummary" maxLength={1000} style={{ marginLeft: '10px', padding: '5px', width: '200px', height: '100px' }} />
+                    <textarea
+                        name="batteryOverallSummary"
+                        maxLength={1000}
+                        style={{ padding: '10px', marginTop: '10px', fontSize: '16px', width: '100%', height: '100px' }}
+                    />
                 </label>
                 <label>
                     Attach Images:
-                    <input type="file" multiple name="attachedImages" style={{ marginLeft: '10px', padding: '5px', width: '200px' }} />
+                    <input
+                        type="file"
+                        multiple
+                        name="attachedImages"
+                        style={{ padding: '5px', width: '100%' }}
+                    />
                 </label>
             </div>
-
-            <button onClick={generateReport} style={{ marginTop: '20px', padding: '10px', fontSize: '16px' }}>Generate Report</button>
+            <button className="generate-report" onClick={generateReport} style={{ padding: '10px', marginTop: '10px', fontSize: '16px' }}>Generate Report</button>
         </div>
+
     );
 }
 

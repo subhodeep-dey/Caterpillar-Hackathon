@@ -84,37 +84,63 @@ function FillEngineReport() {
     
 
     return (
-        <div>
+        <div className="container">
             <h1>Enter Analysis Report for {reportName && <>{reportName}</>}</h1>
-            <button onClick={discardReport} style={{ marginLeft: 'auto' }}>Discard Report</button>
+            <button className="discard-button" onClick={discardReport}>Discard Report</button>
             <p>Press "Start Dictation" to begin recording. Speak into your microphone, and the text will appear below.</p>
-            <button onClick={startDictation}>Start Dictation</button>
-            <button onClick={stopDictation}>Stop Dictation</button>
-            <textarea id="inputField" placeholder="Your speech will appear here..." value={transcript}  style={{ width: '100%', height: '100px', padding: '10px', marginTop: '10px', fontSize: '16px' }}></textarea>
+            <div className="button-row">
+                <button onClick={startDictation}>Start Dictation</button>
+                <button onClick={stopDictation}>Stop Dictation</button>
+            </div>
+            <textarea
+                id="inputField"
+                placeholder="Your speech will appear here..."
+                value={transcript}
+                style={{ width: '100%', height: '100px', padding: '10px', marginTop: '10px', fontSize: '16px' }}
+            ></textarea>
             <h2>Manual Entry</h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px' }}>
+            <div className="form-row">
                 <label>
                     Inspection ID:
-                    <input type="text" name="inspectionID" placeholder="Enter Inspection ID" required style={{ marginLeft: '10px', padding: '5px', width: '200px' }} />
+                    <input
+                        type="text"
+                        name="inspectionID"
+                        placeholder="Enter Inspection ID"
+                        required
+                        style={{ padding: '5px', width: '100%' }}
+                    />
                 </label>
-                <label>
+                <label className="check-box" style={{ display: 'flex', flexDirection: 'row' , gap: '10px'}}>
                     Rust, Dent, or Damage:
-                    <input type="checkbox" name="rustDentOrDamage" required style={{ marginLeft: '10px', padding: '5px' }} />
+                    <input type="checkbox" name="rustDentOrDamage" required />
                 </label>
                 <label>
                     Rust, Dent, or Damage Notes:
-                    <textarea name="rustDentOrDamageNotes" maxLength={1000} style={{ marginLeft: '10px', padding: '5px', width: '200px', height: '100px' }} placeholder="Detail any noted damages..." />
+                    <textarea
+                        name="rustDentOrDamageNotes"
+                        maxLength={1000}
+                        style={{ padding: '10px', marginTop: '10px', fontSize: '16px', width: '100%', height: '100px' }}
+                        placeholder="Detail any noted damages..."
+                    />
                 </label>
                 <label>
                     Engine Oil Condition:
-                    <select name="engineOilCondition" required style={{ marginLeft: '10px', padding: '5px', width: '210px' }}>
+                    <select
+                        name="engineOilCondition"
+                        required
+                        style={{ padding: '5px', width: '100%' }}
+                    >
                         <option value="Good">Good</option>
                         <option value="Bad">Bad</option>
                     </select>
                 </label>
                 <label>
                     Engine Oil Color:
-                    <select name="engineOilColor" required style={{ marginLeft: '10px', padding: '5px', width: '210px' }}>
+                    <select
+                        name="engineOilColor"
+                        required
+                        style={{ padding: '5px', width: '100%' }}
+                    >
                         <option value="Clean">Clean</option>
                         <option value="Brown">Brown</option>
                         <option value="Black">Black</option>
@@ -122,35 +148,54 @@ function FillEngineReport() {
                 </label>
                 <label>
                     Brake Fluid Condition:
-                    <select name="brakeFluidCondition" required style={{ marginLeft: '10px', padding: '5px', width: '210px' }}>
+                    <select
+                        name="brakeFluidCondition"
+                        required
+                        style={{ padding: '5px', width: '100%' }}
+                    >
                         <option value="Good">Good</option>
                         <option value="Bad">Bad</option>
                     </select>
                 </label>
                 <label>
                     Brake Fluid Color:
-                    <select name="brakeFluidColor" required style={{ marginLeft: '10px', padding: '5px', width: '210px' }}>
+                    <select
+                        name="brakeFluidColor"
+                        required
+                        style={{ padding: '5px', width: '100%' }}
+                    >
                         <option value="Clean">Clean</option>
                         <option value="Brown">Brown</option>
                         <option value="Black">Black</option>
                     </select>
                 </label>
-                <label>
+                <label className="check-box" style={{ display: 'flex', flexDirection: 'row' , gap: '10px'}}>
                     Oil Leak in Engine:
-                    <input type="checkbox" name="oilLeakInEngine" required style={{ marginLeft: '10px', padding: '5px' }} />
+                    <input type="checkbox" name="oilLeakInEngine" required />
                 </label>
                 <label>
                     Engine Overall Summary:
-                    <textarea name="engineOverallSummary" maxLength={1000} style={{ marginLeft: '10px', padding: '5px', width: '200px', height: '100px' }} placeholder="Provide overall summary..." />
+                    <textarea
+                        name="engineOverallSummary"
+                        maxLength={1000}
+                        style={{ padding: '10px', marginTop: '10px', fontSize: '16px', width: '100%', height: '100px' }}
+                        placeholder="Provide overall summary..."
+                    />
                 </label>
                 <label>
                     Attach Images:
-                    <input type="file" multiple name="attachedImages" style={{ marginLeft: '10px', padding: '5px', width: '200px' }} />
+                    <input
+                        type="file"
+                        multiple
+                        name="attachedImages"
+                        style={{ padding: '5px', width: '100%' }}
+                    />
                 </label>
             </div>
 
-            <button onClick={generateReport} style={{ marginTop: '20px', padding: '10px', fontSize: '16px' }}>Generate Report</button>
+            <button className="generate-report" onClick={generateReport} style={{ padding: '10px', marginTop: '10px', fontSize: '16px' }}>Generate Report</button>
         </div>
+
     );
 }
 
