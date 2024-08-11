@@ -11,10 +11,10 @@ function CreateTireInspectionModal({ isOpen, onClose, onCreate }) {
   return (
     <div className="modal-backdrop">
       <div className="modal-content">
-        <h2>Create New Tire Inspection</h2>
+        <h2>Create New Tire ID</h2>
         <input
           type="text"
-          placeholder="Enter inspection name"
+          placeholder="Enter inspection ID"
           value={inspectionName}
           onChange={(e) => setInspectionName(e.target.value)}
           className="modal-input"
