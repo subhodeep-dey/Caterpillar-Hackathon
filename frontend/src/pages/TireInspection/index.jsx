@@ -12,11 +12,20 @@ function TireInspection() {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
-        // Fetch initial data or set dummy data
-        const dummyData = []; // Add your initial data here
-        setPagination(calculateRange(dummyData, 5));
-        setTireInspections(sliceData(dummyData, page, 5));
-    }, []);
+        // Fetch initial data from API
+        const fetchData = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/tire-inspections');
+                const data = await response.json();
+                setPagination(calculateRange(data, 5));
+                setTireInspections(sliceData(data, page, 5));
+            } catch (error) {
+                console.error('Error fetching tire inspections:', error);
+            }
+        };
+
+        fetchData();
+    }, [page]);
 
     const handleNewInspection = (inspectionName) => {
         if (inspectionName) {
@@ -89,11 +98,11 @@ function TireInspection() {
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>ASSET</th>
-                            <th>INSPECTION NAME</th>
-                            <th>CONDITION</th>
-                            <th>DATE</th>
-                            <th>ACTION</th>
+                            <th>Left</th>
+                            <th>Right</th>
+                            <th>Condition</th>
+                            <th>Date</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
 
@@ -101,18 +110,14 @@ function TireInspection() {
                         <tbody>
                             {tireInspections.map((inspection, index) => (
                                 <tr key={index}>
-                                    <td><span>{inspection.id}</span></td>
-                                    <td><span>{inspection.asset}</span></td>
+                                    <td><span>{inspection.inspectionId}</span></td>
+                                    <td><span>{inspection.tirePressureLeftFront}</span></td>
+                                    <td><span>{inspection.tirePressureRightFront}</span></td>
+                                    <td><span>{inspection.tireConditionLeftFront}</span></td>
+                                    <td><span>{inspection.createdAt}</span></td>
                                     <td>
-                                        <div>
-                                            <span>{inspection.name}</span>
-                                        </div>
-                                    </td>
-                                    <td><span>{inspection.condition}</span></td>
-                                    <td><span>{inspection.date}</span></td>
-                                    <td>
-                                        <button onClick={() => handleView(inspection.id)}>View</button>
-                                        <button onClick={() => handleDelete(inspection.id)}>Delete</button>
+                                        <button onClick={() => handleView(inspection.inspectionId)}>View</button>
+                                        <button onClick={() => handleDelete(inspection.inspectionId)}>Delete</button>
                                     </td>
                                 </tr>
                             ))}
