@@ -1,6 +1,7 @@
 import DashboardIcon from "../assets/icons/dashboard.svg";
-import ShippingIcon from "../assets/icons/shipping.svg";
+import ShippingIcon from "../assets/icons/inspection.svg";
 import ProductIcon from "../assets/icons/reports.svg";
+import VehicleIcon from "../assets/icons/vehicle.svg";
 import UserIcon from "../assets/icons/user.svg";
 
 const sidebar_menu = [
@@ -24,31 +25,31 @@ const sidebar_menu = [
   },
   {
     id: 4,
-    icon: UserIcon,
+    icon: ShippingIcon,
     path: "/battery-inspection",
     title: "Battery Inspection",
   },
   {
     id: 5,
-    icon: UserIcon,
+    icon: ShippingIcon,
     path: "/exterior-inspection",
     title: "Exterior Inspection",
   },
   {
     id: 6,
-    icon: UserIcon,
+    icon: ShippingIcon,
     path: "/brake-inspection",
     title: "Brake Inspection",
   },
   {
     id: 7,
-    icon: UserIcon,
+    icon: ShippingIcon,
     path: "/engine-inspection",
     title: "Engine Inspection",
   },
   {
     id: 8,
-    icon: DashboardIcon,
+    icon: VehicleIcon,
     path: "/vehicle",
     title: "Vehicle",
   },
