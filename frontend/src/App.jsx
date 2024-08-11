@@ -19,6 +19,7 @@ import BrakeInspection from './pages/BrakeInspection';
 import FillBrakeReport from './pages/BrakeInspection/FillBrakeReport';
 import EngineInspection from './pages/EngineInspection';
 import FillEngineReport from './pages/EngineInspection/FillReport';
+import Login from './pages/Login';
 
 function App () {
   return(
@@ -29,7 +30,7 @@ function App () {
           <div className='dashboard-body'>
               <Routes>
                   <Route path="*" element={<div></div>} />
-                  <Route exact path="/" element={<div></div>} />
+                  <Route exact path="/" element={< Login/>} />
                   <Route exact path="/reports" element={< Reports/>} />
                   <Route exact path="/tire-inspection" element={< TireInspection/>} />
                   <Route exact path="/fillTireInspection" element={<FillTyreReport/>} />
