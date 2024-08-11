@@ -4,6 +4,9 @@ const TireInspection = require('../models/tireInspection.model.js');
 exports.create = (req, res) => {
     // Validate request
     if (!req.body.inspectionID) {
+        req.body.inspectionID = '64d4a098ab987c12a45e6123';
+    }
+    if (!req.body.inspectionID) {
         return res.status(400).send({
             message: "Inspection ID cannot be empty"
         });

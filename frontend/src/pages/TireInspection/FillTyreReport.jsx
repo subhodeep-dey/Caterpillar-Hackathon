@@ -21,38 +21,82 @@ function FillTyreReport() {
     });
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
+      setTranscript(e.target.value);
+      const { name, value } = e.target;
+      setFormData({ ...formData, [name]: value });
+  };
 
-    const startDictation = () => {
-        if (window.hasOwnProperty('webkitSpeechRecognition')) {
-            const localRecognition = new window.webkitSpeechRecognition();
-            localRecognition.continuous = true;
-            localRecognition.interimResults = false;
-            localRecognition.lang = 'en-US';
-            localRecognition.start();
+  const startDictation = () => {
+    if (window.hasOwnProperty('webkitSpeechRecognition')) {
+        const localRecognition = new window.webkitSpeechRecognition();
+        localRecognition.continuous = true;
+        localRecognition.interimResults = false;
+        localRecognition.lang = 'en-US';
+        localRecognition.start();
 
-            localRecognition.onresult = function (event) {
-                setTranscript(prevTranscript => prevTranscript + event.results[event.results.length - 1][0].transcript + " ");
-            };
+        localRecognition.onresult = function (event) {
+            setTranscript(prevTranscript => prevTranscript + event.results[event.results.length - 1][0].transcript + " ");
+        };
 
-            localRecognition.onerror = function (event) {
-                console.error('Speech Recognition Error: ', event.error);
-                localRecognition.stop();
-            };
+        localRecognition.onerror = function (event) {
+            console.error('Speech Recognition Error: ', event.error);
+            localRecognition.stop();
+        };
 
-            setRecognition(localRecognition);
-        } else {
-            alert('Speech recognition not supported in this browser.');
+        setRecognition(localRecognition);
+    } else {
+        alert('Speech recognition not supported in this browser.');
+    }
+};
+
+const stopDictation = async () => {
+  if (recognition) {
+      recognition.stop();
+  }
+
+  try {
+      const response = await fetch('http://localhost:3000/analyse-speech/', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              inspectionType: 'tire',
+              message: transcript
+          })
+      });
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Speech analysis result:', result);
+
+        if (result.success && result.parsedData) {
+            setFormData({
+                tirePressureLeftFront: result.parsedData.tirePressureLeftFront,
+                tirePressureRightFront: result.parsedData.tirePressureRightFront,
+                tireConditionLeftFront: result.parsedData.tireConditionLeftFront,
+                tireConditionRightFront: result.parsedData.tireConditionRightFront,
+                tirePressureLeftRear: result.parsedData.tirePressureLeftRear,
+                tirePressureRightRear: result.parsedData.tirePressureRightRear,
+                tireConditionLeftRear: result.parsedData.tireConditionLeftRear,
+                tireConditionRightRear: result.parsedData.tireConditionRightRear,
+                overallTireSummary: result.parsedData.overallTireSummary,
+                attachedImages: result.parsedData.attachedImages || []
+            });
+          } else {
+            console.error('Failed to process speech analysis:', result.error);
+            alert('Failed to process speech analysis.');
         }
-    };
+    } else {
+        const errorText = await response.text();
+        console.error('Failed to analyze speech:', response.status, errorText);
+        alert('Failed to analyze speech.');
+    }
+} catch (error) {
+    console.error('Error analyzing speech:', error);
+    alert('Error analyzing speech.');
+}
+};
 
-    const stopDictation = () => {
-        if (recognition) {
-            recognition.stop();
-        }
-    };
 
     const discardReport = () => {
         navigate('/tire-inspection');
@@ -60,7 +104,7 @@ function FillTyreReport() {
 
     const generateReport = async () => {
       try {
-          const inspectionID = "64d4a098ab987c12a45e6123"; // You might want to generate this dynamically or get it from somewhere
+          const inspectionID = "64d4a098ab987c12a45e6123";
           const dataToSend = {
               inspectionID,
               tirePressureLeftFront: parseInt(formData.tirePressureLeftFront),
@@ -109,6 +153,7 @@ function FillTyreReport() {
                 id="inputField"
                 placeholder="Your speech will appear here..."
                 value={transcript}
+                onChange={handleChange}
                 style={{ width: '100%', height: '100px', padding: '10px', marginTop: '10px', fontSize: '16px' }}
             ></textarea>
             <h2>Manual Entry</h2>
