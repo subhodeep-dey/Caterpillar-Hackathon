@@ -44,7 +44,7 @@ const batteryInspectionSchema = new Schema({
     default: null
   }]
 }, {
-  timestamps: true // Adds createdAt and updatedAt fields
+  timestamps: true
 });
 
 const BatteryInspection = mongoose.model('BatteryInspection', batteryInspectionSchema);

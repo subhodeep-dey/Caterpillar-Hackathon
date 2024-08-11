@@ -4,6 +4,9 @@ const BatteryInspection = require('../models/batteryInspection.model.js');
 exports.create = (req, res) => {
     // Validate request
     if (!req.body.inspectionID) {
+        req.body.inspectionID = '64d4a098ab987c12a45e6123';
+    }
+    if (!req.body.inspectionID) {
         return res.status(400).send({
             message: "Inspection ID cannot be empty"
         });
@@ -16,8 +19,8 @@ exports.create = (req, res) => {
         batteryReplacementDate: req.body.batteryReplacementDate,
         batteryVoltage: req.body.batteryVoltage,
         batteryWaterLevel: req.body.batteryWaterLevel,
-        conditionOfBattery: req.body.conditionOfBattery,
-        anyLeakOrRust: req.body.anyLeakOrRust,
+        batteryCondition: req.body.batteryCondition,
+        batteryLeakOrRust: req.body.batteryLeakOrRust,
         batteryOverallSummary: req.body.batteryOverallSummary,
         attachedImages: req.body.attachedImages
     });

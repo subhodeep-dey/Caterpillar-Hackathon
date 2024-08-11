@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import './FillBatteryInspection.css'
+import './FillBatteryInspection.css';
 
 function FillBatteryReport() {
     const location = useLocation();
@@ -32,56 +32,100 @@ function FillBatteryReport() {
         }
     };
 
-    const stopDictation = () => {
+    const stopDictation = async () => {
         if (recognition) {
             recognition.stop();
         }
+
+        try {
+            const response = await fetch('http://localhost:3000/analyse-speech/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    inspectionType: 'battery',
+                    message: transcript
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success) {
+                    const parsedData = data.parsedData;
+                    document.querySelector('input[name="batteryMake"]').value = parsedData.batteryMake;
+                    document.querySelector('input[name="batteryReplacementDate"]').value = parsedData.batteryReplacementDate;
+                    document.querySelector('input[name="batteryVoltage"]').value = parsedData.batteryVoltage;
+                    document.querySelector('select[name="batteryWaterLevel"]').value = parsedData.batteryWaterLevel;
+                    document.querySelector('input[name="batteryCondition"]').checked = parsedData.batteryCondition;
+                    document.querySelector('input[name="batteryLeakOrRust"]').checked = parsedData.batteryLeakOrRust;
+                    document.querySelector('textarea[name="batteryOverallSummary"]').value = parsedData.batteryOverallSummary;
+                } else {
+                    alert('Failed to process speech data.');
+                }
+            } else {
+                const errorData = await response.json();
+                console.error('Failed to process speech data:', response.status, errorData);
+                alert(`Failed to process speech data: ${errorData.message}`);
+            }
+        } catch (error) {
+            console.error('Error processing speech data:', error);
+            alert('Error processing speech data.');
+        }
     };
+
     const discardReport = () => {
         navigate('/battery-inspection');
     };
+
     const generateReport = async () => {
         try {
-            const inspectionID = document.querySelector('input[name="inspectionID"]').value;
+            const inspectionID = "64d4a098ab987c12a45e6123"; 
             const batteryMake = document.querySelector('input[name="batteryMake"]').value;
             const batteryReplacementDate = document.querySelector('input[name="batteryReplacementDate"]').value;
-            const batteryVoltage = parseFloat(document.querySelector('input[name="batteryVoltage"]').value);
+            const batteryVoltage = document.querySelector('input[name="batteryVoltage"]').value;
             const batteryWaterLevel = document.querySelector('select[name="batteryWaterLevel"]').value;
-            const batteryCondition = document.querySelector('input[name="batteryCondition"]').checked ? 'Good' : 'Bad';
-            const batteryLeakOrRust = document.querySelector('input[name="batteryLeakOrRust"]').checked ? 'Yes' : 'No';
+            const batteryCondition = document.querySelector('input[name="batteryCondition"]').checked;
+            const batteryLeakOrRust = document.querySelector('input[name="batteryLeakOrRust"]').checked;
             const batteryOverallSummary = document.querySelector('textarea[name="batteryOverallSummary"]').value;
-    
-            const formData = new FormData();
-            formData.append('inspectionID', inspectionID);
-            formData.append('batteryMake', batteryMake);
-            formData.append('batteryReplacementDate', batteryReplacementDate);
-            formData.append('batteryVoltage', batteryVoltage);
-            formData.append('batteryWaterLevel', batteryWaterLevel);
-            formData.append('batteryCondition', batteryCondition);
-            formData.append('batteryLeakOrRust', batteryLeakOrRust);
-            formData.append('batteryOverallSummary', batteryOverallSummary);
 
-    
+            if (!inspectionID || !batteryMake || !batteryReplacementDate || !batteryVoltage || !batteryWaterLevel) {
+                alert('Please fill all required fields.');
+                return;
+            }
+
+            const formData = {
+                inspectionID,
+                batteryMake,
+                batteryReplacementDate,
+                batteryVoltage,
+                batteryWaterLevel,
+                batteryCondition,
+                batteryLeakOrRust,
+                batteryOverallSummary
+            };
+
             const response = await fetch('http://localhost:3000/battery-inspections', {
                 method: 'POST',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
             });
-    
+
             if (response.ok) {
                 alert('Report generated successfully!');
                 navigate('/battery-inspection');
             } else {
-                const errorText = await response.text();
-                console.error('Failed to generate report:', response.status, errorText);
-                alert('Failed to generate report.');
+                const errorData = await response.json();
+                console.error('Failed to generate report:', response.status, errorData);
+                alert(`Failed to generate report: ${errorData.message}`);
             }
         } catch (error) {
             console.error('Error generating report:', error);
             alert('Error generating report.');
         }
     };
-    
-
 
     return (
         <div className="container">
@@ -96,6 +140,7 @@ function FillBatteryReport() {
                 id="inputField"
                 placeholder="Your speech will appear here..."
                 value={transcript}
+                onChange={(event) => setTranscript(event.target.value)}
                 style={{ width: '100%', height: '100px', padding: '10px', marginTop: '10px', fontSize: '16px' }}
             ></textarea>
             <h2>Manual Entry</h2>
@@ -105,8 +150,8 @@ function FillBatteryReport() {
                     <input
                         type="text"
                         name="inspectionID"
-                        placeholder="Enter Inspection ID"
-                        required
+                        value="64d4a098ab987c12a45e6123" 
+                        readOnly
                         style={{ padding: '5px', width: '100%' }}
                     />
                 </label>
@@ -150,11 +195,11 @@ function FillBatteryReport() {
                         <option value="Low">Low</option>
                     </select>
                 </label>
-                <label className="check-box" style={{ display: 'flex', flexDirection: 'row' , gap: '10px'}}>
+                <label className="check-box" style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
                     <p>Battery Condition (Check = Good):</p>
                     <input type="checkbox" name="batteryCondition" required />
                 </label>
-                <label className="check-box" style={{ display: 'flex', flexDirection: 'row' , gap: '10px'}}>
+                <label className="check-box" style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
                     <p>Battery Leak or Rust (Check = Yes):</p>
                     <input type="checkbox" name="batteryLeakOrRust" required />
                 </label>
@@ -178,7 +223,6 @@ function FillBatteryReport() {
             </div>
             <button className="generate-report" onClick={generateReport} style={{ padding: '10px', marginTop: '10px', fontSize: '16px' }}>Generate Report</button>
         </div>
-
     );
 }
 

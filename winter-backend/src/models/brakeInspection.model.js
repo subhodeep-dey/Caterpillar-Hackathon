@@ -37,7 +37,7 @@ const brakeInspectionSchema = new Schema({
     default: null
   }]
 }, {
-  timestamps: true // Adds createdAt and updatedAt fields
+  timestamps: true
 });
 
 const BrakeInspection = mongoose.model('BrakeInspection', brakeInspectionSchema);
