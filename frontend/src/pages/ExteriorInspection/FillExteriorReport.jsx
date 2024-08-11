@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import './fillReport.css'
 function FillExteriorReport() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -78,42 +78,59 @@ function FillExteriorReport() {
 
 
     return (
-        <div>
-            <h1>Enter Analysis Report for {reportName && <>{reportName}</>}</h1>
-            <button onClick={discardReport} style={{ marginLeft: 'auto' }}>Discard Report</button>
-            <p>Press "Start Dictation" to begin recording. Speak into your microphone, and the text will appear below.</p>
+    <div className="container">
+        <h1>Enter Analysis Report for {reportName && <>{reportName}</>}</h1>
+        <button className="discard-button" onClick={discardReport}>Discard Report</button>
+        <p>Press "Start Dictation" to begin recording. Speak into your microphone, and the text will appear below.</p>
+        <div className="button-row">
             <button onClick={startDictation}>Start Dictation</button>
             <button onClick={stopDictation}>Stop Dictation</button>
-            <textarea id="inputField" placeholder="Your speech will appear here..." value={transcript}  style={{ width: '100%', height: '100px', padding: '10px', marginTop: '10px', fontSize: '16px' }}></textarea>
-            <h2>Manual Entry</h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px' }}>
-              <label>
-                  Inspection ID:
-                  <input type="text" name="inspectionID" placeholder="Enter Inspection ID" required style={{ marginLeft: '10px', padding: '5px', width: '200px' }} />
-              </label>
-              <label>
-                  Rust, Dent, or Damage:
-                  <input type="checkbox" name="rustDentOrDamage" required style={{ marginLeft: '10px', padding: '5px' }} />
-              </label>
-              <label>
-                  Rust, Dent, or Damage Notes:
-                  <textarea name="rustDentOrDamageNotes" maxLength={1000} style={{ marginLeft: '10px', padding: '5px', width: '200px', height: '100px' }} placeholder="Detail any noted damages..." />
-              </label>
-              <label>
-                  Oil Leak in Suspension:
-                  <input type="checkbox" name="oilLeakInSuspension" required style={{ marginLeft: '10px', padding: '5px' }} />
-              </label>
-              <label>
-                  Exterior Overall Summary:
-                  <textarea name="exteriorOverallSummary" maxLength={1000} style={{ marginLeft: '10px', padding: '5px', width: '200px', height: '100px' }} placeholder="Provide overall summary..." />
-              </label>
-              <label>
-                  Attach Images:
-                  <input type="file" multiple name="attachedImages" style={{ marginLeft: '10px', padding: '5px', width: '200px' }} />
-              </label>
-          </div>
-            <button onClick={generateReport} style={{ marginTop: '20px', padding: '10px', fontSize: '16px' }}>Generate Report</button>
         </div>
+        <textarea
+            id="inputField"
+            placeholder="Your speech will appear here..."
+            value={transcript}
+            style={{ width: '100%', height: '100px', padding: '10px', marginTop: '10px', fontSize: '16px' }}
+        ></textarea>
+        <h2>Manual Entry</h2>
+        <div className="form-row">
+            <label>
+                Inspection ID:
+                <input type="text" name="inspectionID" placeholder="Enter Inspection ID" required style={{ padding: '5px', width: '100%' }} />
+            </label>
+            <label className="check-box" style={{ display: 'flex', flexDirection: 'row' , gap: '10px'}}>
+                Rust, Dent, or Damage:
+                <input type="checkbox" name="rustDentOrDamage" required />
+            </label>
+            <label>
+                Rust, Dent, or Damage Notes:
+                <textarea
+                    name="rustDentOrDamageNotes"
+                    maxLength={1000}
+                    style={{ padding: '10px', marginTop: '10px', fontSize: '16px', width: '100%', height: '100px' }}
+                    placeholder="Detail any noted damages..."
+                />
+            </label>
+            <label className='check-box'  style={{ display: 'flex', flexDirection: 'row' , gap: '10px'}}>
+                Oil Leak in Suspension:
+                <input type="checkbox" name="oilLeakInSuspension" required style={{ padding: '5px' }} />
+            </label>
+            <label>
+                Exterior Overall Summary:
+                <textarea
+                    name="exteriorOverallSummary"
+                    maxLength={1000}
+                    style={{ padding: '10px', marginTop: '10px', fontSize: '16px', width: '100%', height: '100px' }}
+                    placeholder="Provide overall summary..."
+                />
+            </label>
+            <label>
+                Attach Images:
+                <input type="file" multiple name="attachedImages" style={{ padding: '5px', width: '100%' }} />
+            </label>
+        </div>
+        <button className="generate-report" onClick={generateReport} style={{ padding: '10px', marginTop: '10px', fontSize: '16px' }}>Generate Report</button>
+    </div>
     );
 }
 

@@ -1,39 +1,42 @@
 .container {
     padding: 20px 40px;
-}
-
-.form-row {
+  }
+  
+  
+  .form-row {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
+    gap: 20px;
     margin-bottom: 20px;
-}
-
-.form-row label {
+  }
+  
+  .form-row label {
     display: flex;
     flex-direction: column;
     width: 48%;
-}
-
-.button-row {
+  }
+  
+  .button-row {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
-}
-
-.button-row button {
+  }
+  
+  .button-row button {
     width: 48%;
     padding: 10px;
     font-size: 14px;
-}
-
-.generate-report {
+  }
+  
+  .generate-report {
     width: 100%;
     padding: 10px;
     font-size: 14px;
     margin-bottom: 20px;
-}
-
-.discard-button {
+  }
+  
+  .discard-button {
     position: absolute;
     top: 20px;
     right: 40px;
@@ -42,4 +45,5 @@
     padding: 5px 10px;
     border: none;
     cursor: pointer;
-}
+  }
+  

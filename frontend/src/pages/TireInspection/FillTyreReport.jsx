@@ -97,22 +97,42 @@ function FillTyreReport() {
   };
 
     return (
-        <div>
+        <div className="container">
             <h1>Enter Analysis Report for {reportName && <>{reportName}</>}</h1>
-            <button onClick={discardReport} style={{ marginLeft: 'auto' }}>Discard Report</button>
+            <button className="discard-button" onClick={discardReport}>Discard Report</button>
             <p>Press "Start Dictation" to begin recording. Speak into your microphone, and the text will appear below.</p>
-            <button onClick={startDictation}>Start Dictation</button>
-            <button onClick={stopDictation}>Stop Dictation</button>
-            <textarea id="inputField" placeholder="Your speech will appear here..." value={transcript}  style={{ width: '100%', height: '100px', padding: '10px', marginTop: '10px', fontSize: '16px' }}></textarea>
+            <div className="button-row">
+                <button onClick={startDictation}>Start Dictation</button>
+                <button onClick={stopDictation}>Stop Dictation</button>
+            </div>
+            <textarea
+                id="inputField"
+                placeholder="Your speech will appear here..."
+                value={transcript}
+                style={{ width: '100%', height: '100px', padding: '10px', marginTop: '10px', fontSize: '16px' }}
+            ></textarea>
             <h2>Manual Entry</h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px' }}>
+            <div className="form-row">
                 <label>
                     Tire Pressure Left Front:
-                    <input type="number" name="tirePressureLeftFront" value={formData.tirePressureLeftFront} onChange={handleChange} required style={{ marginLeft: '10px', padding: '5px', width: '200px' }} />
+                    <input
+                        type="number"
+                        name="tirePressureLeftFront"
+                        value={formData.tirePressureLeftFront}
+                        onChange={handleChange}
+                        required
+                        style={{ padding: '5px', width: '100%' }}
+                    />
                 </label>
                 <label>
                     Tire Condition Left Front:
-                    <select name="tireConditionLeftFront" value={formData.tireConditionLeftFront} onChange={handleChange} required style={{ marginLeft: '10px', padding: '5px', width: '210px' }}>
+                    <select
+                        name="tireConditionLeftFront"
+                        value={formData.tireConditionLeftFront}
+                        onChange={handleChange}
+                        required
+                        style={{ padding: '5px', width: '100%' }}
+                    >
                         <option value="Good">Good</option>
                         <option value="Ok">Ok</option>
                         <option value="Needs Replacement">Needs Replacement</option>
@@ -120,11 +140,24 @@ function FillTyreReport() {
                 </label>
                 <label>
                     Tire Pressure Right Front:
-                    <input type="number" name="tirePressureRightFront" value={formData.tirePressureRightFront} onChange={handleChange} required style={{ marginLeft: '10px', padding: '5px', width: '200px' }} />
+                    <input
+                        type="number"
+                        name="tirePressureRightFront"
+                        value={formData.tirePressureRightFront}
+                        onChange={handleChange}
+                        required
+                        style={{ padding: '5px', width: '100%' }}
+                    />
                 </label>
                 <label>
                     Tire Condition Right Front:
-                    <select name="tireConditionRightFront" value={formData.tireConditionRightFront} onChange={handleChange} required style={{ marginLeft: '10px', padding: '5px', width: '210px' }}>
+                    <select
+                        name="tireConditionRightFront"
+                        value={formData.tireConditionRightFront}
+                        onChange={handleChange}
+                        required
+                        style={{ padding: '5px', width: '100%' }}
+                    >
                         <option value="Good">Good</option>
                         <option value="Ok">Ok</option>
                         <option value="Needs Replacement">Needs Replacement</option>
@@ -132,11 +165,24 @@ function FillTyreReport() {
                 </label>
                 <label>
                     Tire Pressure Left Rear:
-                    <input type="number" name="tirePressureLeftRear" value={formData.tirePressureLeftRear} onChange={handleChange} required style={{ marginLeft: '10px', padding: '5px', width: '200px' }} />
+                    <input
+                        type="number"
+                        name="tirePressureLeftRear"
+                        value={formData.tirePressureLeftRear}
+                        onChange={handleChange}
+                        required
+                        style={{ padding: '5px', width: '100%' }}
+                    />
                 </label>
                 <label>
                     Tire Condition Left Rear:
-                    <select name="tireConditionLeftRear" value={formData.tireConditionLeftRear} onChange={handleChange} required style={{ marginLeft: '10px', padding: '5px', width: '210px' }}>
+                    <select
+                        name="tireConditionLeftRear"
+                        value={formData.tireConditionLeftRear}
+                        onChange={handleChange}
+                        required
+                        style={{ padding: '5px', width: '100%' }}
+                    >
                         <option value="Good">Good</option>
                         <option value="Ok">Ok</option>
                         <option value="Needs Replacement">Needs Replacement</option>
@@ -144,11 +190,24 @@ function FillTyreReport() {
                 </label>
                 <label>
                     Tire Pressure Right Rear:
-                    <input type="number" name="tirePressureRightRear" value={formData.tirePressureRightRear} onChange={handleChange} required style={{ marginLeft: '10px', padding: '5px', width: '200px' }} />
+                    <input
+                        type="number"
+                        name="tirePressureRightRear"
+                        value={formData.tirePressureRightRear}
+                        onChange={handleChange}
+                        required
+                        style={{ padding: '5px', width: '100%' }}
+                    />
                 </label>
                 <label>
                     Tire Condition Right Rear:
-                    <select name="tireConditionRightRear" value={formData.tireConditionRightRear} onChange={handleChange} required style={{ marginLeft: '10px', padding: '5px', width: '210px' }}>
+                    <select
+                        name="tireConditionRightRear"
+                        value={formData.tireConditionRightRear}
+                        onChange={handleChange}
+                        required
+                        style={{ padding: '5px', width: '100%' }}
+                    >
                         <option value="Good">Good</option>
                         <option value="Ok">Ok</option>
                         <option value="Needs Replacement">Needs Replacement</option>
@@ -156,11 +215,18 @@ function FillTyreReport() {
                 </label>
                 <label>
                     Overall Tire Summary:
-                    <textarea name="overallTireSummary" value={formData.overallTireSummary} onChange={handleChange} maxLength="1000" style={{ marginLeft: '10px', padding: '5px', width: '300px', height: '100px' }} />
+                    <textarea
+                        name="overallTireSummary"
+                        value={formData.overallTireSummary}
+                        onChange={handleChange}
+                        maxLength="1000"
+                        style={{ padding: '10px', marginTop: '10px', fontSize: '16px', width: '100%', height: '100px' }}
+                    />
                 </label>
             </div>
-            <button onClick={generateReport} style={{ marginTop: '20px', padding: '10px', fontSize: '16px' }}>Generate Report</button>
+            <button className="generate-report" onClick={generateReport} style={{ padding: '10px', marginTop: '10px', fontSize: '16px' }}>Generate Report</button>
         </div>
+
     );
 }
 
