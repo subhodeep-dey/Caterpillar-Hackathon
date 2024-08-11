@@ -12,11 +12,23 @@ function BatteryInspection() {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
-        // Assume initial fetch or setting dummy data for batteries
-        const dummyData = []; // This would ideally be fetched from a server
-        setPagination(calculateRange(dummyData, 5));
-        setBatteryInspections(sliceData(dummyData, page, 5));
+        fetchBatteryInspections();
     }, []);
+
+    const fetchBatteryInspections = async () => {
+        try {
+            const response = await fetch('http://localhost:3000/battery-inspections');
+            if (!response.ok) {
+                throw new Error('Failed to fetch data');
+            }
+            const data = await response.json();
+            setBatteryInspections(data);
+            setPagination(calculateRange(data, 5));
+            setPage(1);
+        } catch (error) {
+            console.error('Error fetching battery inspections:', error);
+        }
+    };
 
     const handleNewInspection = (batteryDetails) => {
         if (batteryDetails) {
@@ -35,11 +47,11 @@ function BatteryInspection() {
         setSearch(event.target.value);
         if (event.target.value !== '') {
             let search_results = batteryInspections.filter((item) =>
-                item.model.toLowerCase().includes(search.toLowerCase())
+                item.batteryMake.toLowerCase().includes(search.toLowerCase())
             );
             setBatteryInspections(search_results);
         } else {
-            __handleChangePage(1);
+            fetchBatteryInspections();
         }
     };
 
@@ -53,8 +65,8 @@ function BatteryInspection() {
     };
 
     const handleDelete = (inspectionID) => {
-        setBatteryInspections(batteryInspections.filter(inspection => inspection.id !== inspectionID));
-        setPagination(calculateRange(batteryInspections.filter(inspection => inspection.id !== inspectionID), 5));
+        setBatteryInspections(batteryInspections.filter(inspection => inspection._id !== inspectionID));
+        setPagination(calculateRange(batteryInspections.filter(inspection => inspection._id !== inspectionID), 5));
     };
 
     return (
@@ -76,7 +88,7 @@ function BatteryInspection() {
                         <input
                             type='text'
                             value={search}
-                            placeholder='Search by model...'
+                            placeholder='Search by battery make...'
                             className='dashboard-content-input'
                             onChange={e => __handleSearch(e)} />
                     </div>
@@ -86,10 +98,12 @@ function BatteryInspection() {
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Battery Model</th>
-                            <th>Inspection Report</th>
-                            <th>Status</th>
-                            <th>Date</th>
+                            <th>Battery Make</th>
+                            <th>Replacement Date</th>
+                            <th>Voltage</th>
+                            <th>Water Level</th>
+                            <th>Condition</th>
+                            <th>Leak/Rust</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -97,19 +111,17 @@ function BatteryInspection() {
                     {batteryInspections.length !== 0 ?
                         <tbody>
                             {batteryInspections.map((inspection, index) => (
-                                <tr key={index}>
-                                    <td><span>{inspection.id}</span></td>
-                                    <td><span>{inspection.model}</span></td>
+                                <tr key={inspection._id}>
+                                    <td><span>{inspection.inspectionID}</span></td>
+                                    <td><span>{inspection.batteryMake}</span></td>
+                                    <td><span>{new Date(inspection.batteryReplacementDate).toLocaleDateString()}</span></td>
+                                    <td><span>{inspection.batteryVoltage}</span></td>
+                                    <td><span>{inspection.batteryWaterLevel}</span></td>
+                                    <td><span>{inspection.batteryCondition ? 'Good' : 'Bad'}</span></td>
+                                    <td><span>{inspection.batteryLeakOrRust ? 'Yes' : 'No'}</span></td>
                                     <td>
-                                        <div>
-                                            <span>{inspection.reportName}</span>
-                                        </div>
-                                    </td>
-                                    <td><span>{inspection.status}</span></td>
-                                    <td><span>{inspection.date}</span></td>
-                                    <td>
-                                        <button onClick={() => handleView(inspection.id)}>View</button>
-                                        <button onClick={() => handleDelete(inspection.id)}>Delete</button>
+                                        <button onClick={() => handleView(inspection._id)}>View</button>
+                                        <button onClick={() => handleDelete(inspection._id)}>Delete</button>
                                     </td>
                                 </tr>
                             ))}
