@@ -60,7 +60,7 @@ function FillBrakeReport() {
     
 
     
-            const response = await fetch('http://localhost:3000/brake-inspections', {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/brake-inspections`, {
                 method: 'POST',
                 body: formData
             });

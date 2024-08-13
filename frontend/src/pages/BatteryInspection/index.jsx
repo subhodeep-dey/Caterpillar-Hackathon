@@ -17,7 +17,7 @@ function BatteryInspection() {
 
     const fetchBatteryInspections = async () => {
         try {
-            const response = await fetch('http://localhost:3000/battery-inspections');
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/battery-inspections`);
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
             }

@@ -55,7 +55,7 @@ const stopDictation = async () => {
   }
 
   try {
-      const response = await fetch('http://localhost:3000/analyse-speech/', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/analyse-speech/`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -118,7 +118,7 @@ const stopDictation = async () => {
               overallTireSummary: formData.overallTireSummary
           };
   
-          const response = await fetch('http://localhost:3000/tire-inspections', {
+          const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/tire-inspections`, {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',

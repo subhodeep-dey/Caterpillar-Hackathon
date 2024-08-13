@@ -38,7 +38,7 @@ function FillBatteryReport() {
         }
 
         try {
-            const response = await fetch('http://localhost:3000/analyse-speech/', {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/analyse-speech/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ function FillBatteryReport() {
                 batteryOverallSummary
             };
 
-            const response = await fetch('http://localhost:3000/battery-inspections', {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/battery-inspections`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

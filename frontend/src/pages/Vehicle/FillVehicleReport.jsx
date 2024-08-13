@@ -52,7 +52,7 @@ function FillVehicleReport() {
             formData.append('customerName', customerName);
             formData.append('catCustomerID', catCustomerID);
     
-            const response = await fetch('http://localhost:3000/vehicle-inspections', {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/vehicle-inspections`, {
                 method: 'POST',
                 body: formData
             });

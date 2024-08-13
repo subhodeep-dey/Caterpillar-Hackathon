@@ -15,7 +15,7 @@ function TireInspection() {
         // Fetch initial data from API
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:3000/tire-inspections');
+                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/tire-inspections`);
                 const data = await response.json();
                 setPagination(calculateRange(data, 5));
                 setTireInspections(sliceData(data, page, 5));

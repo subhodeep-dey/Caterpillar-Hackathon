@@ -55,7 +55,7 @@ function FillExteriorReport() {
             formData.append('oilLeakInSuspension', oilLeakInSuspension);
             formData.append('exteriorOverallSummary', exteriorOverallSummary);
     
-            const response = await fetch('http://localhost:3000/exterior-inspections', {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/exterior-inspections`, {
                 method: 'POST',
                 body: formData
             });
